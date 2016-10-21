@@ -7,4 +7,7 @@ This patcher will make WiiWare patching easy to use Wiimmfi. It also supports pa
 Put your WADs (there can be multiple of them) in the folder corresponding to your operating system then run the patch script.
 
 ## Credits
+
+- CUE for the compressors.
 - Person66 for Sharpii.
+- Wiiprogger for WiiWare Patcher.
