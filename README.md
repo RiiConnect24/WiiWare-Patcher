@@ -8,12 +8,3 @@ Put your WADs (there can be multiple of them) in the folder corresponding to you
 
 ## Credits
 - Person66 for Sharpii.
-
-## Changelog
-
-v1.1:
-- Rewrote the script.
-- Allowed multiple WADs to be patched at once.
-
-v1.0:
-- Initial Release
