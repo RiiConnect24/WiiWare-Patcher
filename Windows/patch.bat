@@ -6,9 +6,13 @@ echo This will patch any WiiWare games in this folder to be installed using a WA
 echo.
 
 mkdir wiimmfi-wads
+mkdir backup-wads
 
 for %%f in ("*.wad") do (
-	echo Patching %%~nf...
+	echo Processing %%~nf...
+	echo Making backup.
+	copy /b %%f backup-wads
+	echo Patching... (this might take a second)
 	Sharpii.exe WAD -u "%%f" temp
 	move temp\00000001.app 00000001.app
 	WiiWarePatcher.exe
@@ -21,5 +25,6 @@ for %%f in ("*.wad") do (
 echo.
 
 echo Done patching the WADs. They're in the folder named wiimmfi-wads.
+echo The original files are in backup-wads.
 
 pause

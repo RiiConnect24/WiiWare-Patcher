@@ -4,11 +4,15 @@ echo "This will patch any WiiWare games in this folder to be installed using a W
 
 echo "\n"
 
-mkdir wiimmfi-wads
+mkdir "wiimmfi-wads"
+mkdir "backup-wads"
 
 for f in *.wad
 do
-	echo "Patching $f..."
+	echo "Processing $f..."
+	echo "Making backup..."
+	cp "$f" "backup-wads"
+	echo "Patching... (this might take a second)"
 	mono Sharpii.exe WAD -u "$f" "temp"
 	mv ./temp/00000001.app 00000001.app
 	./WiiWarePatcher
@@ -21,3 +25,4 @@ done
 echo "\n"
 
 echo "Done patching the WADs. They're in the folder named wiimmfi-wads."
+echo "The original WADs are in backup-wads."
