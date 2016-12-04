@@ -22,6 +22,8 @@ Mac/Linux users:
 	<li>Type in "sh patch.sh".</li>
 </ul>
 
+We recommend installing these WADs with <a href="https://github.com/RiiConnect24/Wii-Mod-Lite/releases">WiiMod Lite</a>.
+
 ## Credits
 
 - CUE for the compressors.
