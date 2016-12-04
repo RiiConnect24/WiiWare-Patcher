@@ -4,9 +4,23 @@ This patcher will make WiiWare patching easy to use Wiimmfi. It also supports pa
 
 ## Usage
 
-Put your WADs (there can be multiple of them) in the folder corresponding to your operating system then run the patch script.
+Put your WADs (there can be multiple of them) in the folder corresponding to your operating system then run the patch script. Below are instructions to run that.
 
-If you're using Mac or Linux you need to install Mono.
+Windows users:
+
+<ul>
+	<li>Double click the "patch" script to run it.</li>
+</ul>
+
+Mac/Linux users:
+
+<ul>
+	<li>You need to install Mono if you haven't already. Please google how to do that.</li>
+	<li>Open a command prompt (Terminal on Mac).</li>
+	<li>Type "cd" and put a space.</li>
+	<li>Drag and drop the folder with the patcher (it either says Mac or Linux depending on what you choose) to the command prompt.</li>
+	<li>Type in "sh patch.sh".</li>
+</ul>
 
 ## Credits
 
