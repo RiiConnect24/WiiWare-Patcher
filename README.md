@@ -15,7 +15,7 @@ Windows users:
 Mac/Linux users:
 
 <ul>
-	<li>You need to install Mono if you haven't already. Please google how to do that.</li>
+	<li>You need to install Mono if you haven't already. Please Google how to do that.</li>
 	<li>Open a command prompt (Terminal on Mac).</li>
 	<li>Type "cd" and put a space.</li>
 	<li>Drag and drop the folder with the patcher (it either says Mac or Linux depending on what you choose) to the command prompt.</li>
