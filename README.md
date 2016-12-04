@@ -1,6 +1,6 @@
 # Automatic WiiWare Patcher
 
-This patcher will make WiiWare patching easy to use Wiimmfi. It also supports patching the Wii Speak Channel and the Mario Kart Channel.
+This patcher will make WiiWare patching easy to do to use Wiimmfi. It also supports patching the Wii Speak Channel and the Mario Kart Channel.
 
 ## Usage
 
