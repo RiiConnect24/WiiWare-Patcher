@@ -1,4 +1,7 @@
 echo off
+
+cls
+
 echo Automatic WAD Patcher for Wiimmfi.
 echo Patcher by PokeAcer and Larsenv.
 echo This will patch any WiiWare games in this folder to be installed using a WAD Manager.
@@ -9,16 +12,17 @@ mkdir wiimmfi-wads
 mkdir backup-wads
 
 for %%f in ("*.wad") do (
+	set file=%%f
 	echo Processing %%~nf...
 	echo Making backup.
-	copy /b %%f backup-wads
-	echo Patching... (this might take a second)
-	Sharpii.exe WAD -u "%%f" temp
+	copy /b "%file%" backup-wads
+	echo Patching... This might take a second.
+	Sharpii.exe WAD -u "%file%" temp
 	move temp\00000001.app 00000001.app
 	WiiWarePatcher.exe
 	move 00000001.app temp\00000001.app
-	del "%%f"
-	Sharpii.exe WAD -p temp "wiimmfi-wads/%%f"
+	del "%file%"
+	Sharpii.exe WAD -p temp "wiimmfi-wads/%file%"
 	rmdir temp /s /q
 )
 

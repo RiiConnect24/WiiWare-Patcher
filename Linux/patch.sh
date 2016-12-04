@@ -12,7 +12,7 @@ do
 	echo "Processing $f..."
 	echo "Making backup..."
 	cp "$f" "backup-wads"
-	echo "Patching... (this might take a second)"
+	echo "Patching... This might take a second."
 	mono Sharpii.exe WAD -u "$f" "temp"
 	mv ./temp/00000001.app 00000001.app
 	./WiiWarePatcher
