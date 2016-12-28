@@ -12,17 +12,16 @@ mkdir wiimmfi-wads
 mkdir backup-wads
 
 for %%f in ("*.wad") do (
-	set file=%%f
 	echo Processing %%~nf...
 	echo Making backup.
-	copy /b "%file%" backup-wads
+	copy /b "%%f" backup-wads
 	echo Patching... This might take a second.
-	Sharpii.exe WAD -u "%file%" temp
+	Sharpii.exe WAD -u "%%f" temp
 	move temp\00000001.app 00000001.app
 	WiiWarePatcher.exe
 	move 00000001.app temp\00000001.app
-	del "%file%"
-	Sharpii.exe WAD -p temp "wiimmfi-wads/%file%"
+	del "%%f"
+	Sharpii.exe WAD -p temp "wiimmfi-wads/%%f"
 	rmdir temp /s /q
 )
 
