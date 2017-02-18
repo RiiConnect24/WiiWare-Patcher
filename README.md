@@ -1,6 +1,6 @@
 # Automatic WiiWare Patcher
 
-This patcher will make WiiWare patching easy to do to use Wiimmfi. It also supports patching the Wii Speak Channel and the Mario Kart Channel.
+This patcher will make WiiWare patching easy to do to use Wiimmfi.
 
 ## Usage
 
@@ -9,7 +9,7 @@ Put your WADs (there can be multiple of them) in the folder corresponding to you
 Windows users:
 
 <ul>
-	<li>Double click the "patch" script to run it.</li>
+	<li>Double click the "patch.bat" script to run it. <b>Don't run WiiWarePatcher.exe</b>.</li>
 </ul>
 
 Mac/Linux users:
