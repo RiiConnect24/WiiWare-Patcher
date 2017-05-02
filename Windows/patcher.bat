@@ -46,7 +46,7 @@ echo ------------------------------
 echo @Larsenv, @PokeAcer, @KcrPL
 echo Please select your language.
 echo.
-echo 1. English (Author: KcrPL)
+echo 1. English (Author: KcrPL) (Correction: Seriel)
 echo 2. Polish (Author: KcrPL)
 echo 3. Deutsch (Author: TimNook)
 echo 4. French (Author: iDroid)
