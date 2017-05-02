@@ -126,11 +126,11 @@ set language=1
 goto begin
 :set_language_eng
 cls
-set text1=There was an error while running program
-set text2=Some of the files needed to run this program was not found
-set text3=Click any button to close this program.
+set text1=There was an error while running the program
+set text2=Some of the files needed to run this program were not found
+set text3=Click any button to close the program.
 set text4=Let's begin.
-set text10=There was an error while patching files.
+set text10=There was an error while patching the files.
 set text13=Exiting the patcher in...
 
 set text5=Actually, you know. Let's begin from that, in order to patch wad file, I need an wad file
@@ -142,8 +142,10 @@ set text8=Patching file:
 set text9=Total amount of files:
 
 set text10=Patching is done.
-set text11=Patched files is in wiimmfi-wads folder
-set text12=Backed up wads is in backup-wads folder
+set text11=Patched files are in wiimmfi-wads folder
+set text12=Backed up wads are in backup-wads folder
+
+
 
 set language=1
 goto begin
