@@ -44,15 +44,64 @@ cls
 echo Wiimmfi patcher
 echo ------------------------------
 echo @Larsenv, @PokeAcer, @KcrPL
-cls
 echo Please select your language.
 echo.
 echo 1. English (Author: KcrPL)
 echo 2. Polish (Author: KcrPL)
+echo 3. Deutsch (Author: TimNook)
+echo 4. French (Author: iDroid)
+
 set /p s=Choose: 
 if %s%==1 goto set_language_eng
 if %s%==2 goto set_language_pol
+if %s%==3 goto set_language_deu
+if %s%==4 goto set_language_fr
 goto set_language
+:set_language_fr
+set text1=Il y a eu une erreur durant l'execution du programme
+set text2=Un des fichiers necessaires pour executer le programme n'a pas ete trouve
+set text3=Appuyer sur n'importe quelle touche pour terminer le programme
+set text4=Commencons
+set text10=Il y a eu une erreur durant le patch des fichiers.
+set text13=Fermeture du patcher...
+
+set text5=En fait, vous savez. Commencons par ceci, afin de patcher un WAD, j'ai besoin du fichier WAD
+set text6=Donc, si vous pouviez s'il vous plait copier le fichier WAD à patcher dans le dossier ou je suis.
+
+set text7=En attente d'un fichier WAD
+
+set text8=Patchage des fichiers...
+set text9=Nombre de fichiers:
+
+set text10=Le patchage est termine.
+set text11=Les fichiers patches se trouvent dans le dossier wiimmfi-wads
+set text12=Les fichiers originaux se trouvent dans le dossier backup-wads
+
+set language=1
+goto begin
+:set_language_deu
+set text1=Es gab einen Fehler während das Programm ausgeführt wurde
+set text2=Einige Dateien die das Programm braucht um zu funktionieren wurden nicht gefunden
+set text3=Drücke irgendeinen Knopf um das Programm zu schließen.
+set text4=Lass uns loslegen.
+set text10=Es gab einen Fehler während die Dateien gepatcht wurden.
+set text13=Schließe den Patcher in...
+
+set text5=Lass uns loslegen. Damit ich eine wad-Datei patchen kann brauche ich eine wad-Datei!
+set text6=Konntest du bitte jede wad-Datei in den selben Ordner verschieben wo ich auch bin.
+
+set text7=Warte auf die .wad Dateien
+
+set text8=Patche Datei:
+set text9=Gesamtmenge der Dateien:
+
+set text10=Alle Dateien wurden gepatcht!.
+set text11=Die gepatchten Dateien sind im "wiimmfi-wads" Ordner
+set text12=Die archivierten .wad Dateien sind im "backup-wads" Ordner
+
+
+set language=1
+goto begin
 :set_language_pol
 set text1=Podczas korzystania z programu wystapil blad
 set text2=Kilka plikow potrzebnych do uruchomienia programu nie zostalo znalezionych
