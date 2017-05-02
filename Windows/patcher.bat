@@ -2,8 +2,6 @@ set language=NotDefined
 if exist C:\Users\%username%\Desktop\DebugPatcher.txt goto debug_failsafe_begin
 goto begin
 :begin
-set dragandrop_func=0
-
 set patchingok=1
 set version=1.0
 set /a beta=0
@@ -50,13 +48,33 @@ echo 1. English (Author: KcrPL) (Correction: Seriel)
 echo 2. Polish (Author: KcrPL)
 echo 3. Deutsch (Author: TimNook)
 echo 4. French (Author: iDroid)
+echo 5. Italian (Author: GameCube)
 
 set /p s=Choose: 
 if %s%==1 goto set_language_eng
 if %s%==2 goto set_language_pol
 if %s%==3 goto set_language_deu
 if %s%==4 goto set_language_fr
+if %s%==5 goto set_language_it
 goto set_language
+:set_language_it
+set text1=Si e verificato un errore durante l'esecuzione del programma
+set text2=Alcuni dei file necessari per eseguire questo programma non sono stati trovati
+set text3=Fare clic su qualsiasi pulsante per chiudere questo programma.
+set text4=Permetta Cominciamo.
+set text10=Si e verificato un errore durante la patch dei file.
+set text13=Uscire dal patcher in ...
+set text5=Veramente, lo sai. Cominciamo da questo, al fine di patch wad file ho bisogno di un file wad.
+set text6=Quindi, se puoi copiare qualsiasi file wad in questa directory io sono.
+set text7=In attesa di file .wad
+set text8=Patching dei file:
+set text9=Totale quantita di file:
+set text10=Patching e fatto.
+set text11=File patch e in wiimmfi-wads cartella
+set text12=originale wads e nella di backup-wads cartella
+
+set language=1
+goto begin
 :set_language_fr
 set text1=Il y a eu une erreur durant l'execution du programme
 set text2=Un des fichiers necessaires pour executer le programme n'a pas ete trouve
@@ -64,15 +82,11 @@ set text3=Appuyer sur n'importe quelle touche pour terminer le programme
 set text4=Commencons
 set text10=Il y a eu une erreur durant le patch des fichiers.
 set text13=Fermeture du patcher...
-
 set text5=En fait, vous savez. Commencons par ceci, afin de patcher un WAD, j'ai besoin du fichier WAD
 set text6=Donc, si vous pouviez s'il vous plait copier le fichier WAD à patcher dans le dossier ou je suis.
-
 set text7=En attente d'un fichier WAD
-
 set text8=Patchage des fichiers...
 set text9=Nombre de fichiers:
-
 set text10=Le patchage est termine.
 set text11=Les fichiers patches se trouvent dans le dossier wiimmfi-wads
 set text12=Les fichiers originaux se trouvent dans le dossier backup-wads
@@ -86,19 +100,14 @@ set text3=Drücke irgendeinen Knopf um das Programm zu schließen.
 set text4=Lass uns loslegen.
 set text10=Es gab einen Fehler während die Dateien gepatcht wurden.
 set text13=Schließe den Patcher in...
-
 set text5=Lass uns loslegen. Damit ich eine wad-Datei patchen kann brauche ich eine wad-Datei!
 set text6=Konntest du bitte jede wad-Datei in den selben Ordner verschieben wo ich auch bin.
-
 set text7=Warte auf die .wad Dateien
-
 set text8=Patche Datei:
 set text9=Gesamtmenge der Dateien:
-
 set text10=Alle Dateien wurden gepatcht!.
 set text11=Die gepatchten Dateien sind im "wiimmfi-wads" Ordner
 set text12=Die archivierten .wad Dateien sind im "backup-wads" Ordner
-
 
 set language=1
 goto begin
@@ -109,15 +118,11 @@ set text3=Nacisnij dowolny przycisk aby zamknac program.
 set text4=Zacznijmy.
 set text10=Wystapil blad podczas patchowania plikow.
 set text13=Zamykanie patchera za...
-
 set text5=Zacznijmy od tego, zeby zaczac patchowac pliki .wad - potrzebuje pliku .wad
 set text6=Wiec jezeli mozesz, skopiuj jakis plik .wad do folderu w ktorym jestem
-
 set text7=Oczekiwanie na plik .wad
-
 set text8=Patchowanie pliku:
 set text9=Laczna liczba plikow:
-
 set text10=Patchowanie przebieglo sukcesem.
 set text11=Zpatchowane pliki sa w folderze "wiimmfi-wads"
 set text12=Kopia zapasowa plikow .wad jest w folderze "backup-wads"
@@ -132,25 +137,17 @@ set text3=Click any button to close the program.
 set text4=Let's begin.
 set text10=There was an error while patching the files.
 set text13=Exiting the patcher in...
-
 set text5=Actually, you know. Let's begin from that, in order to patch wad file, I need an wad file
 set text6=So, if you can please copy any wad file to this directory where I am.
-
 set text7=Waiting for .wad files
-
 set text8=Patching file:
 set text9=Total amount of files:
-
 set text10=Patching is done.
 set text11=Patched files are in wiimmfi-wads folder
 set text12=Backed up wads are in backup-wads folder
 
-
-
 set language=1
 goto begin
-
-
 :debug_failsafe_begin
 echo initiating debug
 set output=No output
@@ -589,46 +586,7 @@ if %rep%==4 set /a rep=0
 set /a rep=%rep%+1
 ping localhost -n 3 >NUL
 goto letsbegin_error
-:dragandropinstall
-rem ### This part of code is abandoned ###
-rem ### ERROR - DEBUG - not working
-cls
-copy "%~1" %appdata%\WiimmfiPatcher\tempfil\ >NUL
-cd %appdata%\WiimmfiPatcher\tempfil\
-if exist backup-wads rmdir backup-wads /s /q
-if exist wiimmfi-wads rmdir wiimmfi-wads /s /q
-if exist temp rmdir temp /s /q
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
-echo.
-echo Patching file: %~1
-if not exist temp md temp
-if not exist wiimmfi-wads md wiimmfi-wads
-if not exist backup-wads md backup-wads
-Sharpii.exe WAD -u "%~1" temp >NUL
-move temp\00000001.app 00000001.app >NUL
-set patchdebug=%~1
-WiiWarePatcher.exe || goto error_ok
-move 00000001.app temp\00000001.app >NUL
-if not exist "C:\Users\%username%\Desktop\WiiWarePatcher\" md "C:\Users\%username%\Desktop\WiiWarePatcher\"
-if not exist "C:\Users\%username%\Desktop\WiiWarePatcher\backup-wads" md "C:\Users\%username%\Desktop\WiiWarePatcher\backup-wads"
-if not exist "C:\Users\%username%\Desktop\WiiWarePatcher\wiimmfi-wads" md "C:\Users\%username%\Desktop\WiiWarePatcher\wiimmfi-wads"
-copy "%~1" "C:\Users\%username%\Desktop\WiiWarePatcher\backup-wads\"
-Sharpii.exe WAD -p temp "wiimmfi-wads\%~1"
-pause
-rmdir temp /s /q
-pause
-copy "wiimmfi-wads\%~1" "C:\Users\%username%\Desktop\WiiWarePatcher\wiimmfi-wads
-pause
-copy "%~1" "C:\Users\%username%\Desktop\WiiWarePatcher\backup-wads
-set patchingok=2
-pause
-goto end
 :letsbegin
-rem DRAG AN DROP - warning, abandoned
-if %dragandrop_func%==1 if not "%~1"=="" goto dragandropinstall
-rem ##########
 for %%f in ("*.wad") do set /a file_counter+=1
 set /a repeat=1
 set /a errorrep=0
@@ -705,9 +663,6 @@ if %patchingok%==1 echo.
 if %patchingok%==1 echo %text11%
 if %patchingok%==1 echo %text12%
 if %patchingok%==1 echo.
-
-if %patchingok%==2 echo Patching is done.
-if %patchingok%==2 echo Pached files are on your Desktop in folder WiiWarePatcher.
 echo %text13%
 if %exiting%==10 echo :----------: 10
 if %exiting%==9 echo :--------- : 9
