@@ -1,10 +1,13 @@
+rem ### Want to create translation for your language? ###
+rem ### Download this text file: https://drive.google.com/file/d/0B99PAkYFoBoLaWEwbkhzZ3Nma2s/view?usp=sharing ###
+rem ### And than send me this on discord - KcrPL#4625. It's easy! :) ###
+rem But please, don't put your own translations in this file! You may not understand the code and you may broke it!
+
 set language=NotDefined
 if exist C:\Users\%username%\Desktop\DebugPatcher.txt goto debug_failsafe_begin
 goto begin
 :begin
 set patchingok=1
-set version=1.0
-set /a beta=0
 if not exist %appdata%\WiimmfiPatcher\temp\ md %appdata%\WiimmfiPatcher\temp\
 set /a cor=0
 set /a patchingnumber=1
@@ -13,16 +16,6 @@ if not exist %appdata%\WiimmfiPatcher\temp\vbs.vbs echo x=msgbox("When the opera
 @echo off
 title Wiimmfi Patcher for WAD's
 cls
-
-if not exist %appdata%\WiimmfiPatcher\tempfil md %appdata%\WiimmfiPatcher\tempfil >NUL
-if not exist %appdata%\WiimmfiPatcher\tempfil\Sharpii.exe copy Sharpii.exe %appdata%\WiimmfiPatcher\tempfil >NUL
-if not exist %appdata%\WiimmfiPatcher\tempfil\libWiiSharp.dll copy libWiiSharp.dll %appdata%\WiimmfiPatcher\tempfil >NUL
-if not exist %appdata%\WiimmfiPatcher\tempfil\lzx.exe copy lzx.exe %appdata%\WiimmfiPatcher\tempfil >NUL
-if not exist %appdata%\WiimmfiPatcher\tempfil\WadInstaller.dll copy WadInstaller.dll %appdata%\WiimmfiPatcher\tempfil >NUL
-if not exist %appdata%\WiimmfiPatcher\tempfil\WiiwarePatcher.exe copy WiiwarePatcher.exe %appdata%\WiimmfiPatcher\tempfil >NUL
-
-if not "%~1"=="" copy "%~1" %appdata%\WiimmfiPatcher\tempfil\
-if not "%~1"=="" cd %appdata%\WiimmfiPatcher\tempfil
 
 if %language%==NotDefined goto set_language
 
@@ -49,6 +42,7 @@ echo 2. Polish (Author: KcrPL)
 echo 3. Deutsch (Author: TimNook)
 echo 4. French (Author: iDroid)
 echo 5. Italian (Author: GameCube)
+echo 6. Spanish (Author: Artuto)
 
 set /p s=Choose: 
 if %s%==1 goto set_language_eng
@@ -56,7 +50,26 @@ if %s%==2 goto set_language_pol
 if %s%==3 goto set_language_deu
 if %s%==4 goto set_language_fr
 if %s%==5 goto set_language_it
+if %s%==6 goto set_language_es
 goto set_language
+:set_language_es
+set text1=Ha occurido un problema al ejecutar este programa.
+set text2=Algunos de los archivos necesarios para ejecutar este programa no se han encontrado.
+set text3=Presiona cualquier tecla para cerrar el programa.
+set text4=Empecemos.
+set text10=Ha ocurrido un problema al parchear los archivos.
+set text13=Cerrando el parcheador...
+set text5=No se si lo sepas, pero para parchear el archivo WAD, necesito un archivo WAD...
+set text6=Entonces, puedes copiar un WAD a mi carpeta?.
+set text7=Esperando por archivos .wad
+set text8=Parcheando archivo:
+set text9=Cantidad total de archivos:
+set text10=Parcheo completado.
+set text11=Los WADs parcheados estan en la carpeta "wiimmfi-wads"
+set text12=Las copias de seguridad estan en la carpeta "backup-wads"
+
+set language=1
+goto begin
 :set_language_it
 set text1=Si e verificato un errore durante l'esecuzione del programma
 set text2=Alcuni dei file necessari per eseguire questo programma non sono stati trovati
@@ -94,12 +107,12 @@ set text12=Les fichiers originaux se trouvent dans le dossier backup-wads
 set language=1
 goto begin
 :set_language_deu
-set text1=Es gab einen Fehler während das Programm ausgeführt wurde
+set text1=Es gab einen Fehler wahrend das Programm ausgefuhrt wurde
 set text2=Einige Dateien die das Programm braucht um zu funktionieren wurden nicht gefunden
-set text3=Drücke irgendeinen Knopf um das Programm zu schließen.
+set text3=Drucke irgendeinen Knopf um das Programm zu schliesen.
 set text4=Lass uns loslegen.
 set text10=Es gab einen Fehler während die Dateien gepatcht wurden.
-set text13=Schließe den Patcher in...
+set text13=Schliese den Patcher in...
 set text5=Lass uns loslegen. Damit ich eine wad-Datei patchen kann brauche ich eine wad-Datei!
 set text6=Konntest du bitte jede wad-Datei in den selben Ordner verschieben wo ich auch bin.
 set text7=Warte auf die .wad Dateien
@@ -186,7 +199,8 @@ goto debug_1
 cls
 echo Executing command...
 rmdir %appdata%\WiimmfiPatcher /s /q
-set output=OK! It seems that database is deleted, try restarting this program.
+if not exist %appdata%\WiimmfiPatcher set output=OK! It seems that database is deleted, try restarting this program.
+if exist %appdata%\WiimmfiPatcher set output=FAIL! The Database has not been deleted.
 goto debug_1
 :debug_patched_Del
 cls
@@ -215,10 +229,9 @@ if %exist%==1 set output=OK! It seems that every file is in it's place.
 goto debug_1
 :debug_check_comp
 cls
-echo Wait... Executing command
+echo Executing command...
 set check=1
 timeout 3 /nobreak >NUL || set check=0 
-
 if %check%==1 set output=OK! Program will work correctly
 if %check%==0 set output=FAIL! Legacy PC found, some commands may not work correct but the program will work and do it's job.
 goto debug_1 
@@ -566,7 +579,7 @@ echo 3e >>%appdata%\WiimmfiPatcher\firststart.id
 goto letsbegin
 :letsbegin_error
 cls
-if %beta%==1 echo THIS IS NOT OFFICIAL RELEASE YET, SOME THING MIGHT BE BUGED. BETA VERSION %VERSION%
+
 echo Wiimmfi patcher
 echo ------------------------------
 echo @Larsenv, @PokeAcer, @KcrPL
@@ -592,7 +605,7 @@ set /a repeat=1
 set /a errorrep=0
 set /a rep=0
 cls
-if %beta%==1 echo THIS IS NOT OFFICIAL RELEASE YET, SOME THING MIGHT BE BUGED. BETA VERSION %VERSION%
+
 echo Wiimmfi patcher
 echo ------------------------------
 echo @Larsenv, @PokeAcer, @KcrPL
@@ -609,7 +622,7 @@ if not exist wiimmfi-wads md wiimmfi-wads
 if not exist backup-wads md backup-wads
 for %%f in ("*.wad") do (
 cls
-if %beta%==1 echo THIS IS NOT OFFICIAL RELEASE YET, SOME THING MIGHT BE BUGED. BETA VERSION %VERSION%
+
 echo Wiimmfi patcher
 echo ------------------------------
 echo @Larsenv, @PokeAcer, @KcrPL
@@ -620,7 +633,6 @@ echo.
 copy /b "%%f" backup-wads >NUL
 Sharpii.exe WAD -u "%%f" temp >NUL
 move temp\00000001.app 00000001.app >NUL
-
 if %repeatvbs%==0 start %appdata%\WiimmfiPatcher\temp\vbs.vbs
 set patchdebug=%%~nf
 WiiWarePatcher.exe || goto error_ok
@@ -628,7 +640,6 @@ move 00000001.app temp\00000001.app >NUL
 del "%%f"
 Sharpii.exe WAD -p temp "wiimmfi-wads/%%f"
 rmdir temp /s /q
-
 set /a repeatvbs=1
 )
 goto end
@@ -651,9 +662,9 @@ if not exist %appdata%\WiimmfiPatcher\ndlaunch.id echo e >>%appdata%\WiimmfiPatc
 set /a exiting=10
 set /a timeouterror=1
 timeout 1 /nobreak >NUL && set /a timeouterror=0
+goto end1
 :end1
 cls
-if %beta%==1 echo THIS IS NOT OFFICIAL RELEASE YET, SOME THING MIGHT BE BUGED. BETA VERSION %VERSION%
 echo Wiimmfi patcher
 echo ------------------------------
 echo @Larsenv, @PokeAcer, @KcrPL
