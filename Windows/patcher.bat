@@ -42,6 +42,7 @@ echo 2. Polish (Author: KcrPL)
 echo 3. Deutsch (Author: TimNook)
 echo 4. French (Author: iDroid)
 echo 5. Italian (Author: GameCube)
+echo 6. Spanish (Author: Artuto)
 
 set /p s=Choose: 
 if %s%==1 goto set_language_eng
@@ -49,7 +50,26 @@ if %s%==2 goto set_language_pol
 if %s%==3 goto set_language_deu
 if %s%==4 goto set_language_fr
 if %s%==5 goto set_language_it
+if %s%==6 goto set_language_es
 goto set_language
+:set_language_es
+set text1=Ha occurido un problema al ejecutar este programa.
+set text2=Algunos de los archivos necesarios para ejecutar este programa no se han encontrado.
+set text3=Presiona cualquier tecla para cerrar el programa.
+set text4=Empecemos.
+set text10=Ha ocurrido un problema al parchear los archivos.
+set text13=Cerrando el parcheador...
+set text5=No se si lo sepas, pero para parchear el archivo WAD, necesito un archivo WAD...
+set text6=Entonces, puedes copiar un WAD a mi carpeta?.
+set text7=Esperando por archivos .wad
+set text8=Parcheando archivo:
+set text9=Cantidad total de archivos:
+set text10=Parcheo completado.
+set text11=Los WADs parcheados estan en la carpeta "wiimmfi-wads"
+set text12=Las copias de seguridad estan en la carpeta "backup-wads"
+
+set language=1
+goto begin
 :set_language_it
 set text1=Si e verificato un errore durante l'esecuzione del programma
 set text2=Alcuni dei file necessari per eseguire questo programma non sono stati trovati
