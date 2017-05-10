@@ -30,4 +30,4 @@ We recommend installing these WADs with <a href="https://github.com/RiiConnect24
 - Person66 for Sharpii.
 - Wiiprogger for WiiWare Patcher.
 
-![AGPL v3 Logo](https://upload.wikimedia.org/wikipedia/commons/0/06/AGPLv3_Logo.svg "This software is licensed under the AGPL v3 License.")
+![AGPL v3 Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/AGPLv3_Logo.svg/320px-AGPLv3_Logo.svg.png "This software is licensed under the AGPL v3 License.")
