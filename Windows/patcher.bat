@@ -2,7 +2,9 @@ rem ### Want to create translation for your language? ###
 rem ### Download this text file: https://drive.google.com/file/d/0B99PAkYFoBoLaWEwbkhzZ3Nma2s/view?usp=sharing ###
 rem ### And than send me this on discord - KcrPL#4625. It's easy! :) ###
 rem But please, don't put your own translations in this file! You may not understand the code and you may broke it!
-
+@echo off
+mode 120,30
+chcp 65001
 set language=NotDefined
 if exist C:\Users\%username%\Desktop\DebugPatcher.txt goto debug_failsafe_begin
 goto begin
@@ -32,9 +34,10 @@ if exist %appdata%\WiimmfiPatcher\ndlaunch.id goto ndstart
 goto firststart
 :set_language
 cls
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+cls
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo Please select your language.
 echo.
 echo 1. English (Author: KcrPL) (Correction: Seriel)
@@ -43,7 +46,8 @@ echo 3. Deutsch (Author: TimNook)
 echo 4. French (Author: iDroid)
 echo 5. Italian (Author: GameCube)
 echo 6. Spanish (Author: Artuto)
-
+echo 7. Portuguese (Author: Rafael)
+echo.
 set /p s=Choose: 
 if %s%==1 goto set_language_eng
 if %s%==2 goto set_language_pol
@@ -51,7 +55,26 @@ if %s%==3 goto set_language_deu
 if %s%==4 goto set_language_fr
 if %s%==5 goto set_language_it
 if %s%==6 goto set_language_es
+if %s%==7 goto set_language_braz
 goto set_language
+:set_language_braz
+set text1=Ocorreu um erro enquanto abriamos o programa
+set text2=Alguns dos arquivos necessários para o programa, não foram encontrados.
+set text3=Clique em qualquer botão para fechar o programa.
+set text4=Vamos começar.
+set text10=Ocorreu um erro durante o patch dos arquivos.
+set text13=Saindo do patcher em...
+set text5=Agora, você sabe. Vamos começar com aquilo, em ordem para o patch do arquivo wad, eu preciso do arquivo wad
+set text6=Então se você puder copiar o arquivo wad para a pasta aonde estou.
+set text7=Esperando pelos arquivos .wad
+set text8=Patch do arquivo em progresso:
+set text9=Total de arquivos:
+set text10=Patching foi finalizado.
+set text11=Arquivos com Patch estão na pasta wiimmfi-wads 
+set text12=Os arquivos originais estão na pasta backup-wads 
+
+set language=1
+goto begin
 :set_language_es
 set text1=Ha occurido un problema al ejecutar este programa.
 set text2=Algunos de los archivos necesarios para ejecutar este programa no se han encontrado.
@@ -125,8 +148,8 @@ set text12=Die archivierten .wad Dateien sind im "backup-wads" Ordner
 set language=1
 goto begin
 :set_language_pol
-set text1=Podczas korzystania z programu wystapil blad
-set text2=Kilka plikow potrzebnych do uruchomienia programu nie zostalo znalezionych
+set text1=Podczas korzystania z programu wystąpil bład
+set text2=Kilka plików potrzebnych do uruchomienia programu nie zostalo znalezionych
 set text3=Nacisnij dowolny przycisk aby zamknac program.
 set text4=Zacznijmy.
 set text10=Wystapil blad podczas patchowania plikow.
@@ -237,9 +260,10 @@ if %check%==0 set output=FAIL! Legacy PC found, some commands may not work corre
 goto debug_1 
 :files_req_err
 cls
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+cls
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo.
 echo :------------------------------------------------------------:
 echo  %text1%
@@ -579,10 +603,9 @@ echo 3e >>%appdata%\WiimmfiPatcher\firststart.id
 goto letsbegin
 :letsbegin_error
 cls
-
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo.
 echo %text4%
 echo.
@@ -606,9 +629,10 @@ set /a errorrep=0
 set /a rep=0
 cls
 
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+cls
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo.
 if %cor%==0 echo %text4%
 if %cor%==1 echo %text4%
@@ -623,9 +647,10 @@ if not exist backup-wads md backup-wads
 for %%f in ("*.wad") do (
 cls
 
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+cls
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo.
 echo %text8%: %%~nf
 echo %text9%: %file_counter%
@@ -645,9 +670,10 @@ set /a repeatvbs=1
 goto end
 :error_ok
 cls
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+cls
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo.
 echo :------------------------------------------:
 echo   %text10% 
@@ -665,9 +691,10 @@ timeout 1 /nobreak >NUL && set /a timeouterror=0
 goto end1
 :end1
 cls
-echo Wiimmfi patcher
-echo ------------------------------
-echo @Larsenv, @PokeAcer, @KcrPL
+cls
+echo.
+echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
+echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
 echo.
 if %patchingok%==1 echo %text10%
 if %patchingok%==1 echo.
