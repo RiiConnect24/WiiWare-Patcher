@@ -1,4 +1,7 @@
 # Automatic WiiWare Patcher
+[![License](https://img.shields.io/github/license/riiconnect24/auto-wiiware-patcher.svg?style=flat-square)](http://www.gnu.org/licenses/agpl-3.0)
+![Production List](https://img.shields.io/discord/206934458954153984.svg?style=flat-square)
+![Version Badge](https://img.shields.io/github/release/riiconnect24/auto-wiiware-patcher.svg?style=flat-square)
 
 This patcher will make WiiWare patching easy to do to use Wiimmfi.
 
@@ -29,5 +32,3 @@ We recommend installing these WADs with <a href="https://github.com/RiiConnect24
 - CUE for the compressors.
 - Person66 for Sharpii.
 - Wiiprogger for WiiWare Patcher.
-
-![AGPL v3 Logo](https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/AGPLv3_Logo.svg/320px-AGPLv3_Logo.svg.png "This software is licensed under the AGPL v3 License.")
