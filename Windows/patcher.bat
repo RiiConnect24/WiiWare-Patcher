@@ -1,5 +1,6 @@
 @echo off
 mode 120,30
+set /a crashing=0
 chcp 65001
 set language=NotDefined
 if exist C:\Users\%username%\Desktop\DebugPatcher.txt goto debug_failsafe_begin
@@ -33,8 +34,12 @@ cls
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo Please select your language.
+echo.
+echo R. Open RiiConnect24 site in your default browser.
+if %crashing%==0 echo C. [ ] If this program is crashing try selecting this option.
+if %crashing%==1 echo C. [X] If this program is crashing try selecting this option.
 echo.
 echo 1. English (Author: KcrPL) (Correction: Seriel)
 echo 2. Polish (Author: KcrPL)
@@ -45,6 +50,10 @@ echo 6. Spanish (Author: Artuto)
 echo 7. Portuguese (Author: Rafael)
 echo.
 set /p s=Choose: 
+if %s%==c goto change_crashing_var
+if %s%==C goto change_crashing_var
+if %s%==r start www.rc24.xyz
+if %s%==R start www.rc24.xyz
 if %s%==1 goto set_language_eng
 if %s%==2 goto set_language_pol
 if %s%==3 goto set_language_deu
@@ -53,111 +62,225 @@ if %s%==5 goto set_language_it
 if %s%==6 goto set_language_es
 if %s%==7 goto set_language_braz
 goto set_language
-:set_language_braz
-set text1=Ocorreu um erro enquanto abriamos o programa
-set text2=Alguns dos arquivos necessários para o programa, não foram encontrados.
-set text3=Clique em qualquer botão para fechar o programa.
-set text4=Vamos começar.
-set text10=Ocorreu um erro durante o patch dos arquivos.
-set text13=Saindo do patcher em...
-set text5=Agora, você sabe. Vamos começar com aquilo, em ordem para o patch do arquivo wad, eu preciso do arquivo wad
-set text6=Então se você puder copiar o arquivo wad para a pasta aonde estou.
-set text7=Esperando pelos arquivos .wad
-set text8=Patch do arquivo em progresso:
-set text9=Total de arquivos:
-set text10=Patching foi finalizado.
-set text11=Arquivos com Patch estão na pasta wiimmfi-wads 
-set text12=Os arquivos originais estão na pasta backup-wads 
+:change_crashing_var
+if %crashing%==0 goto cr_var_1
+if %crashing%==1 goto cr_var_0
+goto set_language
+:cr_var_1
+set /a crashing=1
+goto set_language
+:cr_var_0
+set /a crashing=0
+goto set_language
 
+:error_crashing
+cls
+echo.
+echo IOS Patcher for RiiConnect24 - @Larsenv, @KcrPL. v%version%
+echo ------------------------------------------------------------------------------------------------------------------------
+echo  [*] Info.
+echo.
+echo Anti-Crash function cannot be used with this language. Please use another language.
+echo.
+echo Sorry for the inconvenience. :(
+echo.
+echo Press anything to go back to language select.
+pause>NUL
+goto set_language
+:set_language_braz
+if %crashing%==0 set text1=Ocorreu um erro enquanto abriamos o programa
+if %crashing%==0 set text2=Alguns dos arquivos necessários para o programa, não foram encontrados.
+if %crashing%==0 set text3=Clique em qualquer botão para fechar o programa.
+if %crashing%==0 set text4=Vamos começar.
+if %crashing%==0 set text10=Ocorreu um erro durante o patch dos arquivos.
+if %crashing%==0 set text13=Saindo do patcher em...
+if %crashing%==0 set text5=Agora, você sabe. Vamos começar com aquilo, em ordem para o patch do arquivo wad, eu preciso do arquivo wad
+if %crashing%==0 set text6=Então se você puder copiar o arquivo wad para a pasta aonde estou.
+if %crashing%==0 set text7=Esperando pelos arquivos .wad
+if %crashing%==0 set text8=Patch do arquivo em progresso:
+if %crashing%==0 set text9=Total de arquivos:
+if %crashing%==0 set text10=Patching foi finalizado.
+if %crashing%==0 set text11=Arquivos com Patch estão na pasta wiimmfi-wads 
+if %crashing%==0 set text12=Os arquivos originais estão na pasta backup-wads 
+
+if %crashing%==1 set text1=Ocorreu um erro enquanto abriamos o programa
+if %crashing%==1 set text2=Alguns dos arquivos necessarios para o programa, nao foram encontrados.
+if %crashing%==1 set text3=Clique em qualquer botao para fechar o programa.
+if %crashing%==1 set text4=Vamos comecar.
+if %crashing%==1 set text10=Ocorreu um erro durante o patch dos arquivos.
+if %crashing%==1 set text13=Saindo do patcher em...
+if %crashing%==1 set text5=Agora, voce sabe. Vamos começar com aquilo, em ordem para o patch do arquivo wad, eu preciso do arquivo wad
+if %crashing%==1 set text6=Entao se voce puder copiar o arquivo wad para a pasta aonde estou.
+if %crashing%==1 set text7=Esperando pelos arquivos .wad
+if %crashing%==1 set text8=Patch do arquivo em progresso:
+if %crashing%==1 set text9=Total de arquivos:
+if %crashing%==1 set text10=Patching foi finalizado.
+if %crashing%==1 set text11=Arquivos com Patch estao na pasta wiimmfi-wads 
+if %crashing%==1 set text12=Os arquivos originais estao na pasta backup-wads 
 set language=1
 goto begin
 :set_language_es
-set text1=Ha occurido un problema al ejecutar este programa.
-set text2=Algunos de los archivos necesarios para ejecutar este programa no se han encontrado.
-set text3=Presiona cualquier tecla para cerrar el programa.
-set text4=Empecemos.
-set text10=Ha ocurrido un problema al parchear los archivos.
-set text13=Cerrando el parcheador...
-set text5=No se si lo sepas, pero para parchear el archivo WAD, necesito un archivo WAD...
-set text6=Entonces, puedes copiar un WAD a mi carpeta?.
-set text7=Esperando por archivos .wad
-set text8=Parcheando archivo:
-set text9=Cantidad total de archivos:
-set text10=Parcheo completado.
-set text11=Los WADs parcheados estan en la carpeta "wiimmfi-wads"
-set text12=Las copias de seguridad estan en la carpeta "backup-wads"
+if %crashing%==0 set text1=Ha occurido un problema al ejecutar este programa.
+if %crashing%==0 set text2=Algunos de los archivos necesarios para ejecutar este programa no se han encontrado.
+if %crashing%==0 set text3=Presiona cualquier tecla para cerrar el programa.
+if %crashing%==0 set text4=Empecemos.
+if %crashing%==0 set text10=Ha ocurrido un problema al parchear los archivos.
+if %crashing%==0 set text13=Cerrando el parcheador...
+if %crashing%==0 set text5=No se si lo sepas, pero para parchear el archivo WAD, necesito un archivo WAD...
+if %crashing%==0 set text6=Entonces, puedes copiar un WAD a mi carpeta?.
+if %crashing%==0 set text7=Esperando por archivos .wad
+if %crashing%==0 set text8=Parcheando archivo:
+if %crashing%==0 set text9=Cantidad total de archivos:
+if %crashing%==0 set text10=Parcheo completado.
+if %crashing%==0 set text11=Los WADs parcheados estan en la carpeta "wiimmfi-wads"
+if %crashing%==0 set text12=Las copias de seguridad estan en la carpeta "backup-wads"
+
+if %crashing%==1 set text1=Ha occurido un problema al ejecutar este programa.
+if %crashing%==1 set text2=Algunos de los archivos necesarios para ejecutar este programa no se han encontrado.
+if %crashing%==1 set text3=Presiona cualquier tecla para cerrar el programa.
+if %crashing%==1 set text4=Empecemos.
+if %crashing%==1 set text10=Ha ocurrido un problema al parchear los archivos.
+if %crashing%==1 set text13=Cerrando el parcheador...
+if %crashing%==1 set text5=No se si lo sepas, pero para parchear el archivo WAD, necesito un archivo WAD...
+if %crashing%==1 set text6=Entonces, puedes copiar un WAD a mi carpeta?.
+if %crashing%==1 set text7=Esperando por archivos .wad
+if %crashing%==1 set text8=Parcheando archivo:
+if %crashing%==1 set text9=Cantidad total de archivos:
+if %crashing%==1 set text10=Parcheo completado.
+if %crashing%==1 set text11=Los WADs parcheados estan en la carpeta "wiimmfi-wads"
+if %crashing%==1 set text12=Las copias de seguridad estan en la carpeta "backup-wads"
 
 set language=1
 goto begin
 :set_language_it
-set text1=Si e verificato un errore durante l'esecuzione del programma
-set text2=Alcuni dei file necessari per eseguire questo programma non sono stati trovati
-set text3=Fare clic su qualsiasi pulsante per chiudere questo programma.
-set text4=Permetta Cominciamo.
-set text10=Si e verificato un errore durante la patch dei file.
-set text13=Uscire dal patcher in ...
-set text5=Veramente, lo sai. Cominciamo da questo, al fine di patch wad file ho bisogno di un file wad.
-set text6=Quindi, se puoi copiare qualsiasi file wad in questa directory io sono.
-set text7=In attesa di file .wad
-set text8=Patching dei file:
-set text9=Totale quantita di file:
-set text10=Patching e fatto.
-set text11=File patch e in wiimmfi-wads cartella
-set text12=originale wads e nella di backup-wads cartella
+if %crashing%==0 set text1=Si e verificato un errore durante l'esecuzione del programma
+if %crashing%==0 set text2=Alcuni dei file necessari per eseguire questo programma non sono stati trovati
+if %crashing%==0 set text3=Fare clic su qualsiasi pulsante per chiudere questo programma.
+if %crashing%==0 set text4=Permetta Cominciamo.
+if %crashing%==0 set text10=Si e verificato un errore durante la patch dei file.
+if %crashing%==0 set text13=Uscire dal patcher in ...
+if %crashing%==0 set text5=Veramente, lo sai. Cominciamo da questo, al fine di patch wad file ho bisogno di un file wad.
+if %crashing%==0 set text6=Quindi, se puoi copiare qualsiasi file wad in questa directory io sono.
+if %crashing%==0 set text7=In attesa di file .wad
+if %crashing%==0 set text8=Patching dei file:
+if %crashing%==0 set text9=Totale quantita di file:
+if %crashing%==0 set text10=Patching e fatto.
+if %crashing%==0 set text11=File patch e in wiimmfi-wads cartella
+if %crashing%==0 set text12=originale wads e nella di backup-wads cartella
+
+if %crashing%==1 set text1=Si e verificato un errore durante l'esecuzione del programma
+if %crashing%==1 set text2=Alcuni dei file necessari per eseguire questo programma non sono stati trovati
+if %crashing%==1 set text3=Fare clic su qualsiasi pulsante per chiudere questo programma.
+if %crashing%==1 set text4=Permetta Cominciamo.
+if %crashing%==1 set text10=Si e verificato un errore durante la patch dei file.
+if %crashing%==1 set text13=Uscire dal patcher in ...
+if %crashing%==1 set text5=Veramente, lo sai. Cominciamo da questo, al fine di patch wad file ho bisogno di un file wad.
+if %crashing%==1 set text6=Quindi, se puoi copiare qualsiasi file wad in questa directory io sono.
+if %crashing%==1 set text7=In attesa di file .wad
+if %crashing%==1 set text8=Patching dei file:
+if %crashing%==1 set text9=Totale quantita di file:
+if %crashing%==1 set text10=Patching e fatto.
+if %crashing%==1 set text11=File patch e in wiimmfi-wads cartella
+if %crashing%==1 set text12=originale wads e nella di backup-wads cartella
 
 set language=1
 goto begin
 :set_language_fr
-set text1=Il y a eu une erreur durant l'execution du programme
-set text2=Un des fichiers necessaires pour executer le programme n'a pas ete trouve
-set text3=Appuyer sur n'importe quelle touche pour terminer le programme
-set text4=Commencons
-set text10=Il y a eu une erreur durant le patch des fichiers.
-set text13=Fermeture du patcher...
-set text5=En fait, vous savez. Commencons par ceci, afin de patcher un WAD, j'ai besoin du fichier WAD
-set text6=Donc, si vous pouviez s'il vous plait copier le fichier WAD à patcher dans le dossier ou je suis.
-set text7=En attente d'un fichier WAD
-set text8=Patchage des fichiers...
-set text9=Nombre de fichiers:
-set text10=Le patchage est termine.
-set text11=Les fichiers patches se trouvent dans le dossier wiimmfi-wads
-set text12=Les fichiers originaux se trouvent dans le dossier backup-wads
+if %crashing%==0 set text1=Il y a eu une erreur durant l'execution du programme
+if %crashing%==0 set text2=Un des fichiers necessaires pour executer le programme n'a pas ete trouve
+if %crashing%==0 set text3=Appuyer sur n'importe quelle touche pour terminer le programme
+if %crashing%==0 set text4=Commencons
+if %crashing%==0 set text10=Il y a eu une erreur durant le patch des fichiers.
+if %crashing%==0 set text13=Fermeture du patcher...
+if %crashing%==0 set text5=En fait, vous savez. Commencons par ceci, afin de patcher un WAD, j'ai besoin du fichier WAD
+if %crashing%==0 set text6=Donc, si vous pouviez s'il vous plait copier le fichier WAD à patcher dans le dossier ou je suis.
+if %crashing%==0 set text7=En attente d'un fichier WAD
+if %crashing%==0 set text8=Patchage des fichiers...
+if %crashing%==0 set text9=Nombre de fichiers:
+if %crashing%==0 set text10=Le patchage est termine.
+if %crashing%==0 set text11=Les fichiers patches se trouvent dans le dossier wiimmfi-wads
+if %crashing%==0 set text12=Les fichiers originaux se trouvent dans le dossier backup-wads
 
+
+if %crashing%==1 set text1=Il y a eu une erreur durant l'execution du programme
+if %crashing%==1 set text2=Un des fichiers necessaires pour executer le programme n'a pas ete trouve
+if %crashing%==1 set text3=Appuyer sur n'importe quelle touche pour terminer le programme
+if %crashing%==1 set text4=Commencons
+if %crashing%==1 set text10=Il y a eu une erreur durant le patch des fichiers.
+if %crashing%==1 set text13=Fermeture du patcher...
+if %crashing%==1 set text5=En fait, vous savez. Commencons par ceci, afin de patcher un WAD, j'ai besoin du fichier WAD
+if %crashing%==1 set text6=Donc, si vous pouviez s'il vous plait copier le fichier WAD a patcher dans le dossier ou je suis.
+if %crashing%==1 set text7=En attente d'un fichier WAD
+if %crashing%==1 set text8=Patchage des fichiers...
+if %crashing%==1 set text9=Nombre de fichiers:
+if %crashing%==1 set text10=Le patchage est termine.
+if %crashing%==1 set text11=Les fichiers patches se trouvent dans le dossier wiimmfi-wads
+if %crashing%==1 set text12=Les fichiers originaux se trouvent dans le dossier backup-wads
 set language=1
 goto begin
 :set_language_deu
-set text1=Es gab einen Fehler wahrend das Programm ausgefuhrt wurde
-set text2=Einige Dateien die das Programm braucht um zu funktionieren wurden nicht gefunden
-set text3=Drucke irgendeinen Knopf um das Programm zu schliesen.
-set text4=Lass uns loslegen.
-set text10=Es gab einen Fehler während die Dateien gepatcht wurden.
-set text13=Schliese den Patcher in...
-set text5=Lass uns loslegen. Damit ich eine wad-Datei patchen kann brauche ich eine wad-Datei!
-set text6=Konntest du bitte jede wad-Datei in den selben Ordner verschieben wo ich auch bin.
-set text7=Warte auf die .wad Dateien
-set text8=Patche Datei:
-set text9=Gesamtmenge der Dateien:
-set text10=Alle Dateien wurden gepatcht!.
-set text11=Die gepatchten Dateien sind im "wiimmfi-wads" Ordner
-set text12=Die archivierten .wad Dateien sind im "backup-wads" Ordner
+if %crashing%==0 set text1=Es gab einen Fehler wahrend das Programm ausgefuhrt wurde
+if %crashing%==0 set text2=Einige Dateien die das Programm braucht um zu funktionieren wurden nicht gefunden
+if %crashing%==0 set text3=Drucke irgendeinen Knopf um das Programm zu schliesen.
+if %crashing%==0 set text4=Lass uns loslegen.
+if %crashing%==0 set text10=Es gab einen Fehler während die Dateien gepatcht wurden.
+if %crashing%==0 set text13=Schliese den Patcher in...
+if %crashing%==0 set text5=Lass uns loslegen. Damit ich eine wad-Datei patchen kann brauche ich eine wad-Datei!
+if %crashing%==0 set text6=Konntest du bitte jede wad-Datei in den selben Ordner verschieben wo ich auch bin.
+if %crashing%==0 set text7=Warte auf die .wad Dateien
+if %crashing%==0 set text8=Patche Datei:
+if %crashing%==0 set text9=Gesamtmenge der Dateien:
+if %crashing%==0 set text10=Alle Dateien wurden gepatcht!.
+if %crashing%==0 set text11=Die gepatchten Dateien sind im "wiimmfi-wads" Ordner
+if %crashing%==0 set text12=Die archivierten .wad Dateien sind im "backup-wads" Ordner
 
+
+if %crashing%==1 set text1=Es gab einen Fehler wahrend das Programm ausgefuhrt wurde
+if %crashing%==1 set text2=Einige Dateien die das Programm braucht um zu funktionieren wurden nicht gefunden
+if %crashing%==1 set text3=Drucke irgendeinen Knopf um das Programm zu schliesen.
+if %crashing%==1 set text4=Lass uns loslegen.
+if %crashing%==1 set text10=Es gab einen Fehler während die Dateien gepatcht wurden.
+if %crashing%==1 set text13=Schliese den Patcher in...
+if %crashing%==1 set text5=Lass uns loslegen. Damit ich eine wad-Datei patchen kann brauche ich eine wad-Datei!
+if %crashing%==1 set text6=Konntest du bitte jede wad-Datei in den selben Ordner verschieben wo ich auch bin.
+if %crashing%==1 set text7=Warte auf die .wad Dateien
+if %crashing%==1 set text8=Patche Datei:
+if %crashing%==1 set text9=Gesamtmenge der Dateien:
+if %crashing%==1 set text10=Alle Dateien wurden gepatcht!.
+if %crashing%==1 set text11=Die gepatchten Dateien sind im "wiimmfi-wads" Ordner
+if %crashing%==1 set text12=Die archivierten .wad Dateien sind im "backup-wads" Ordner
 set language=1
 goto begin
 :set_language_pol
-set text1=Podczas korzystania z programu wystąpil bład
-set text2=Kilka plików potrzebnych do uruchomienia programu nie zostalo znalezionych
-set text3=Nacisnij dowolny przycisk aby zamknac program.
-set text4=Zacznijmy.
-set text10=Wystapil blad podczas patchowania plikow.
-set text13=Zamykanie patchera za...
-set text5=Zacznijmy od tego, zeby zaczac patchowac pliki .wad - potrzebuje pliku .wad
-set text6=Wiec jezeli mozesz, skopiuj jakis plik .wad do folderu w ktorym jestem
-set text7=Oczekiwanie na plik .wad
-set text8=Patchowanie pliku:
-set text9=Laczna liczba plikow:
-set text10=Patchowanie przebieglo sukcesem.
-set text11=Zpatchowane pliki sa w folderze "wiimmfi-wads"
-set text12=Kopia zapasowa plikow .wad jest w folderze "backup-wads"
+if %crashing%==0 set text1=Podczas korzystania z programu wystąpil bład
+if %crashing%==0 set text2=Kilka plików potrzebnych do uruchomienia programu nie zostalo znalezionych
+if %crashing%==0 set text3=Nacisnij dowolny przycisk aby zamknac program.
+if %crashing%==0 set text4=Zacznijmy.
+if %crashing%==0 set text10=Wystapil blad podczas patchowania plikow.
+if %crashing%==0 set text13=Zamykanie patchera za...
+if %crashing%==0 set text5=Zacznijmy od tego, zeby zaczac patchowac pliki .wad - potrzebuje pliku .wad
+if %crashing%==0 set text6=Wiec jezeli mozesz, skopiuj jakis plik .wad do folderu w ktorym jestem
+if %crashing%==0 set text7=Oczekiwanie na plik .wad
+if %crashing%==0 set text8=Patchowanie pliku:
+if %crashing%==0 set text9=Laczna liczba plikow:
+if %crashing%==0 set text10=Patchowanie przebieglo sukcesem.
+if %crashing%==0 set text11=Zpatchowane pliki sa w folderze "wiimmfi-wads"
+if %crashing%==0 set text12=Kopia zapasowa plikow .wad jest w folderze "backup-wads"
+
+if %crashing%==1 set text1=Podczas korzystania z programu wystąpil bład
+if %crashing%==1 set text2=Kilka plikow potrzebnych do uruchomienia programu nie zostalo znalezionych
+if %crashing%==1 set text3=Nacisnij dowolny przycisk aby zamknac program.
+if %crashing%==1 set text4=Zacznijmy.
+if %crashing%==1 set text10=Wystapil blad podczas patchowania plikow.
+if %crashing%==1 set text13=Zamykanie patchera za...
+if %crashing%==1 set text5=Zacznijmy od tego, zeby zaczac patchowac pliki .wad - potrzebuje pliku .wad
+if %crashing%==1 set text6=Wiec jezeli mozesz, skopiuj jakis plik .wad do folderu w ktorym jestem
+if %crashing%==1 set text7=Oczekiwanie na plik .wad
+if %crashing%==1 set text8=Patchowanie pliku:
+if %crashing%==1 set text9=Laczna liczba plikow:
+if %crashing%==1 set text10=Patchowanie przebieglo sukcesem.
+if %crashing%==1 set text11=Zpatchowane pliki sa w folderze "wiimmfi-wads"
+if %crashing%==1 set text12=Kopia zapasowa plikow .wad jest w folderze "backup-wads"
 
 set language=1
 goto begin
@@ -259,7 +382,7 @@ cls
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 echo :------------------------------------------------------------:
 echo  %text1%
@@ -283,7 +406,7 @@ goto firststart
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 echo %text4%
 echo.
@@ -310,7 +433,7 @@ cls
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 if %cor%==0 echo %text4%
 if %cor%==1 echo %text4%
@@ -328,7 +451,7 @@ cls
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 echo %text8%: %%~nf
 echo %text9%: %file_counter%
@@ -351,7 +474,7 @@ cls
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 echo :------------------------------------------:
 echo   %text10% 
@@ -372,7 +495,7 @@ cls
 cls
 echo.
 echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @Larsenv
-echo ΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞΞ
+echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 if %patchingok%==1 echo %text10%
 if %patchingok%==1 echo.
