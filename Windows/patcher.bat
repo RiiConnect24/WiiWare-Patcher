@@ -465,9 +465,13 @@ WiiWarePatcher.exe || goto error_ok
 move 00000001.app temp\00000001.app >NUL 
 del "%%f"
 Sharpii.exe WAD -p temp "wiimmfi-wads/%%f"
+
 rmdir temp /s /q
 set /a repeatvbs=1
 )
+cd wiimmfi-wads
+for %%a in (*.wad) do ren "%%~a" "%%~na_Wiimmfi%%~xa"
+cd..
 goto end
 :error_ok
 cls
