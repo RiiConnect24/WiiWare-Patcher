@@ -11,7 +11,7 @@ if not exist %appdata%\WiimmfiPatcher\temp\ md %appdata%\WiimmfiPatcher\temp\
 set /a cor=0
 set /a patchingnumber=1
 set /a repeatvbs=0
-if not exist %appdata%\WiimmfiPatcher\temp\vbs.vbs echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>%appdata%\WiimmfiPatcher\temp\vbs.vbs
+if not exist %appdata%\WiimmfiPatcher\temp\vbs.vbs echo x=msgbox("When the operation is done, press any key." ,64, "Wiimmfi WAD Patcher") >>%appdata%\WiimmfiPatcher\temp\vbs.vbs
 @echo off
 title Wiimmfi Patcher for WAD's
 cls
@@ -37,7 +37,7 @@ echo                                      WiiWarePatcher - @KcrPL, @PokeAcer, @L
 echo ------------------------------------------------------------------------------------------------------------------------
 echo Please select your language.
 echo.
-echo R. Open RiiConnect24 site in your default browser.
+echo R. Open the RiiConnect24 website in your default browser.
 if %crashing%==0 echo C. [ ] If the program is crashing try selecting this option.
 if %crashing%==1 echo C. [X] If the program is crashing try selecting this option.
 echo.
@@ -84,7 +84,7 @@ echo The Anti-Crash function cannot be used with this language. Please use anoth
 echo.
 echo Sorry for the inconvenience. :(
 echo.
-echo Press any key to go back to language select menu.
+echo Press any key to go back to the language select menu.
 pause>NUL
 goto set_language
 :set_language_braz
