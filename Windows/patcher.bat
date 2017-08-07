@@ -38,8 +38,8 @@ echo ---------------------------------------------------------------------------
 echo Please select your language.
 echo.
 echo R. Open RiiConnect24 site in your default browser.
-if %crashing%==0 echo C. [ ] If this program is crashing try selecting this option.
-if %crashing%==1 echo C. [X] If this program is crashing try selecting this option.
+if %crashing%==0 echo C. [ ] If the program is crashing try selecting this option.
+if %crashing%==1 echo C. [X] If the program is crashing try selecting this option.
 echo.
 echo 1. English (Author: KcrPL) (Correction: Seriel)
 echo 2. Polish (Author: KcrPL)
@@ -80,11 +80,11 @@ echo IOS Patcher for RiiConnect24 - @Larsenv, @KcrPL. v%version%
 echo ------------------------------------------------------------------------------------------------------------------------
 echo  [*] Info.
 echo.
-echo Anti-Crash function cannot be used with this language. Please use another language.
+echo The Anti-Crash function cannot be used with this language. Please use another language.
 echo.
 echo Sorry for the inconvenience. :(
 echo.
-echo Press anything to go back to language select.
+echo Press any key to go back to language select menu.
 pause>NUL
 goto set_language
 :set_language_braz
@@ -286,20 +286,20 @@ set language=1
 goto begin
 :set_language_eng
 cls
-set text1=There was an error while running the program
-set text2=Some of the files needed to run this program were not found
-set text3=Click any button to close the program.
+set text1=An error occurred.
+set text2=Files required to run this script are missing, please re-download the script.
+set text3=Press any key to close the program.
 set text4=Let's begin.
-set text10=There was an error while patching the files.
+set text10=An error occurred while patching the files.
 set text13=Exiting the patcher in...
-set text5=Actually, you know. Let's begin from that, in order to patch wad file, I need an wad file
-set text6=So, if you can please copy any wad file to this directory where I am.
-set text7=Waiting for .wad files
+set text5=Actually, let's begin from here.
+set text6=Please copy any WAD file to the directory where I am.
+set text7=Waiting for WAD files.
 set text8=Patching file:
 set text9=Total amount of files:
 set text10=Patching is done.
-set text11=Patched files are in wiimmfi-wads folder
-set text12=Backed up wads are in backup-wads folder
+set text11=Patched files are in the wiimmfi-wads folder.
+set text12=Backed up WADS are in the backup-wads folder.
 
 set language=1
 goto begin
@@ -319,13 +319,13 @@ echo --- Output ---
 echo %output%
 echo --------------
 echo.
-echo 1. Reset program
-echo 2. Reset database
-echo 3. Delete patched files
-echo 4. exit
-echo 5. open command prompt
-echo 6. Files check
-echo 7. Check for program compatibility on this computer
+echo 1. Reset program.
+echo 2. Reset database.
+echo 3. Delete patched files.
+echo 4. Exit.
+echo 5. Open Command Prompt.
+echo 6. File check.
+echo 7. Check for program compatibility on this computer.
 echo.
 set /p s=Choose: 
 if %s%==1 goto begin
@@ -341,19 +341,19 @@ goto debug_1
 cls
 echo Executing command...
 rmdir %appdata%\WiimmfiPatcher /s /q
-if not exist %appdata%\WiimmfiPatcher set output=OK! It seems that database is deleted, try restarting this program.
-if exist %appdata%\WiimmfiPatcher set output=FAIL! The Database has not been deleted.
+if not exist %appdata%\WiimmfiPatcher set output=OK! The database has been deleted.
+if exist %appdata%\WiimmfiPatcher set output=FAIL! The database has not been deleted.
 goto debug_1
 :debug_patched_Del
 cls
 echo Executing command...
 rmdir backup-wads /s /q
 rmdir wiimmfi-wads /s /q
-set output=OK! It seems that 2 folders has been deleted
+set output=OK! Two folders have been deleted.
 goto debug_1
 :debug_cmd
 cls
-echo Type "exit" to return to debug menu
+echo Type "exit" to return to the debug menu.
 echo :---------------------------------------:
 cmd
 goto debug_1
@@ -366,16 +366,16 @@ if not exist libWiiSharp.dll set exist=0
 if not exist lzx.exe set exist=0
 if not exist WadInstaller.dll set exist=0
 if not exist WiiwarePatcher.exe set exist=0
-if %exist%==0 set output=FAIL! Files are corrupted. Redownload the package.
-if %exist%==1 set output=OK! It seems that every file is in it's place.
+if %exist%==0 set output=FAIL! Files required to run this script are missing, please re-download the script.
+if %exist%==1 set output=OK! It seems that every file required to run this script exist.
 goto debug_1
 :debug_check_comp
 cls
 echo Executing command...
 set check=1
 timeout 3 /nobreak >NUL || set check=0 
-if %check%==1 set output=OK! Program will work correctly
-if %check%==0 set output=FAIL! Legacy PC found, some commands may not work correct but the program will work and do it's job.
+if %check%==1 set output=OK! The program will work correctly on this machine.
+if %check%==0 set output=FAIL! We detected that you are using a Legacy PC so the program may not function correctly.
 goto debug_1 
 :files_req_err
 cls
