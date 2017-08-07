@@ -12,7 +12,7 @@ Put your WADs (there can be multiple of them) in the folder corresponding to you
 Windows users:
 
 <ul>
-	<li>Double click the "patch.bat" script to run it. <b>Don't run WiiWarePatcher.exe</b>.</li>
+	<li>Double click the "patcher.bat" script to run it. <b>Don't run WiiWarePatcher.exe</b>.</li>
 </ul>
 
 Mac/Linux users:
