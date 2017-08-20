@@ -12,7 +12,7 @@ Put your WADs (there can be multiple of them) in the folder corresponding to you
 Windows users:
 
 <ul>
-	<li>Double click the "patcher.bat" script to run it. <b>Don't run WiiWarePatcher.exe</b>.</li>
+	<li>Double click the "patcher.bat" script to run it. <b>Don't run WiiWarePatcher.exe. After starting up the patcher, follow the instructions on screen. Also, don't forget to put .WADs into the folder with patcher.</b>.</li>
 </ul>
 
 Mac/Linux users:
@@ -32,3 +32,4 @@ We recommend installing these WADs with <a href="https://github.com/RiiConnect24
 - CUE for the compressors.
 - Person66 for Sharpii.
 - Wiiprogger for WiiWare Patcher.
+- KcrPL for making the Windows version of patcher.
