@@ -14,7 +14,7 @@ set /a repeatvbs=0
 set /a temperrorlev=0
 set last_build=2017/09/14
 set at=22:47
-set version=2.1.3
+set version=2.1.4
 set /a
 
 if not exist %appdata%\WiimmfiPatcher\temp\vbs.vbs echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>%appdata%\WiimmfiPatcher\temp\vbs.vbs
@@ -30,7 +30,7 @@ if %patherror%==0 if not exist patcher.bat set /a patherror=2
 set /a WiiWarePatcher_Update_Activate=1
 set /a whatsnew=1
 set /a offlinestorage=0
-set FilesHostedOn=https://rc24.xyz/Patchers_Auto_Update/WiiWare-Patcher
+set FilesHostedOn=https://kcrpl.github.io/Patchers_Auto_Update/WiiWare-Patcher
 set MainFolder=%appdata%\WiiWare-Patcher
 set TempStorage=%appdata%\WiiWare-Patcher\internet\temp
 
@@ -90,43 +90,6 @@ echo                                     :syhdyyyyso+/-`
 pause>NUL
 if %patherror%==1 goto begin_main
 goto startup_script
-:error_update_not_available
-cls
-echo.
-echo              `..````
-echo              yNNNNNNNNMNNmmmmdddhhhyyyysssooo+++/:--.`
-echo              hNNNNNNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd
-echo              ddmNNd:dNMMMMNMMMMMMMMMMMMMMMMMMMMMMMMMMs
-echo             `mdmNNy dNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+
-echo             .mmmmNs mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:
-echo             :mdmmN+`mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.
-echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN
-echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd
-echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
-echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
-echo ------------------------------------------------------------------------------------------------------------------------------
-echo    /---\   Error.
-echo   /     \  An Update server is not available.
-echo  /   !   \
-echo  ---------
-echo.
-echo            Press any button to continue.
-echo ------------------------------------------------------------------------------------------------------------------------------
-echo           -mddmmo`mNMNNNNMMMNNNmdyoo+mMMMNmNMMMNyyys
-echo           :mdmmmo-mNNNNNNNNNNdyo++sssyNMMMMMMMMMhs+-
-echo          .+mmdhhmmmNNNNNNmdysooooosssomMMMNNNMMMm
-echo          o/ossyhdmmNNmdyo+++oooooosssoyNMMNNNMMMM+
-echo          o/::::::://++//+++ooooooo+oo++mNMMmNNMMMm
-echo         `o//::::::::+////+++++++///:/+shNMMNmNNmMM+
-echo         .o////////::+++++++oo++///+syyyymMmNmmmNMMm
-echo         -+//////////o+ooooooosydmdddhhsosNMMmNNNmho            `:/
-echo         .+++++++++++ssss+//oyyysso/:/shmshhs+:.          `-/oydNNNy
-echo           `..-:/+ooss+-`          +mmhdy`           -/shmNNNNNdy+:`
-echo                   `.              yddyo++:    `-/oymNNNNNdy+:`
-echo                                   -odhhhhyddmmmmmNNmhs/:`
-echo                                     :syhdyyyyso+/-`
-pause>NUL
-goto begin_main
 :startup_script
 mode %mode%
 cls
@@ -178,8 +141,9 @@ if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 powershell -comman
 
 	if %offlinestorage%==0 set /a temperrorlev=%errorlevel%
 
+set /a updateserver=1
 	::Bind error codes to errors here
-	if %offlinestorage%==0 if not %errorlevel%==0 goto error_update_not_available
+	if %offlinestorage%==0 if not %errorlevel%==0 set /a updateserver=0
 
 
 if exist "%TempStorage%\version.txt`" ren "%TempStorage%\version.txt`" "version.txt"
@@ -190,6 +154,7 @@ if not exist %TempStorage%\version.txt set /a updateavailable=0
 if %WiiWarePatcher_Update_Activate%==1 if exist %TempStorage%\version.txt set /a updateavailable=1
 if %updateversion%==%version% set /a updateavailable=0
 
+if %WiiWarePatcher_Update_Activate%==1 if %updateavailable%==1 set /a updateserver=2
 if %WiiWarePatcher_Update_Activate%==1 if %updateavailable%==1 goto update_notice
 
 if not exist Sharpii.exe goto files_req_err
@@ -280,7 +245,7 @@ echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 set /p s=
 if %s%==1 goto update_files
-if %s%==2 goto begin_main
+if %s%==2 goto choose_patch_type
 if %s%==3 goto whatsnew
 goto update_notice
 :update_files
@@ -506,14 +471,14 @@ goto firststart
 :choose_patch_type
 cls
 echo.
-echo              `..````
-echo              yNNNNNNNNMNNmmmmdddhhhyyyysssooo+++/:--.`
-echo              hNNNNNNNNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMd
-echo              ddmNNd:dNMMMMNMMMMMMMMMMMMMMMMMMMMMMMMMMs
-echo             `mdmNNy dNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM+
-echo             .mmmmNs mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM:
+echo :========================================================:
+echo : WiiWare Patcher Update System.                         :
+if %updateserver%==1 echo : The latest version is installed. Press C to read more. :
+if %updateserver%==2 echo : An Update is available. Press C to read more.          :
+if %updateserver%==0 echo : A Update Server is not available. Press C to read more :
+echo :========================================================:
 echo             :mdmmN+`mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.
-echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN
+	echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN
 echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd
 echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
 echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
@@ -541,6 +506,20 @@ echo                                     :syhdyyyyso+/-`
 set /p s=
 if %s%==1 goto letsbegin
 if %s%==2 goto wii_speak_patch
+if %s%==c goto more_info_update
+if %s%==C goto more_info_update
+goto choose_patch_type
+:more_info_update
+cls
+echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version%. (Compiled on %last_build% at %at%)
+echo.
+if %updateserver%==1 echo The latest version of WiiWare Patcher is now installed. (v%version%)
+if %updateserver%==2 goto update_notice
+
+if %updateserver%==0 echo Update server is not available.
+if %updateserver%==0 echo We could not connect to the update server. Please check your internet connection. 
+if %updateserver%==0 echo It can also mean that the server is under maintance now.
+pause>NUL
 goto choose_patch_type
 :wii_speak_patch
 set /a wii_speak_region=NUL
@@ -692,6 +671,7 @@ for %%f in ("*.wad") do (
 cls
 echo Wiimmfi WiiWarePatcher - Larsenv, KcrPL, PokeAcer. v%version%. Compiled on %last_build% at %at%
 echo ------------------------------------------------------------------------------------------------------------------------
+
 echo.
 echo Patching file: %%~nf
 echo Total ammount of files to patch: %file_counter%
