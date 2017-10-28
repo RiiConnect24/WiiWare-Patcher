@@ -1,6 +1,4 @@
 @echo off
-mode 120,30
-chcp 65001
 if exist C:\Users\%username%\Desktop\DebugPatcher.txt goto debug_failsafe_begin
 goto begin
 :begin
@@ -12,14 +10,20 @@ set /a cor=0
 set /a patchingnumber=1
 set /a repeatvbs=0
 set /a temperrorlev=0
-set last_build=2017/09/14
-set at=22:47
-set version=2.1.4
-set /a
+::
+set last_build=2017/10/28
+set at=18:33
+:: ===========================================================================
+:: WiiWare Patcher for Windows
+set version=2.1.5
+:: AUTHORS: KcrPL, Larsenv and PokeAcer
+:: ***************************************************************************
+:: Copyright (c) 2017 RiiConnect24, and it's (Lead) Developers
+:: ===========================================================================
 
 if not exist %appdata%\WiimmfiPatcher\temp\vbs.vbs echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>%appdata%\WiimmfiPatcher\temp\vbs.vbs
 @echo off
-title Wiimmfi Patcher for WAD's v.%version%  Created by @KcrPL, @Larsenv, @PokeAcer
+title Wiimmfi Patcher for WAD's v.%version% Created by @KcrPL, @Larsenv, @PokeAcer
 cls
 
 set /a patherror=0
@@ -30,7 +34,7 @@ if %patherror%==0 if not exist patcher.bat set /a patherror=2
 set /a WiiWarePatcher_Update_Activate=1
 set /a whatsnew=1
 set /a offlinestorage=0
-set FilesHostedOn=https://kcrpl.github.io/Patchers_Auto_Update/WiiWare-Patcher
+set FilesHostedOn=https://raw.githubusercontent.com/KcrPL/KcrPL.github.io/master/Patchers_Auto_Update/WiiWare-Patcher
 set MainFolder=%appdata%\WiiWare-Patcher
 set TempStorage=%appdata%\WiiWare-Patcher\internet\temp
 
@@ -64,7 +68,7 @@ echo             :mdmmN+`mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.
 echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN   Play Wii games online after Nintendo WFC shutdown!
 echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd    Press any button to continue
 echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
-echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
+echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+  (Please mail us at support@riiconnect24.net if you have problems)
 echo             mmmmms smMMMMMMMMMmddMMmmNmNMMMMMMMMMMMM:
 echo            `mmmmmo hNMMMMMMMMMmddNMMMNNMMMMMMMMMMMMM.
 echo            -mmmmm/ dNMMMMMMMMMNmddMMMNdhdMMMMMMMMMMN
