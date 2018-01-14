@@ -1,8 +1,8 @@
 @echo off
-if exist C:\Users\%username%\Desktop\DebugPatcher.txt goto debug_failsafe_begin
+if exist "C:\Users\%username%\Desktop\DebugPatcher.txt" goto debug_failsafe_begin
 goto begin
 :begin
-if not exist %appdata%\WiimmfiPatcher\temp\ md %appdata%\WiimmfiPatcher\temp\
+if not exist "%appdata%\WiimmfiPatcher\temp\" md "%appdata%\WiimmfiPatcher\temp\"
 set patchingok=1
 set mode=126,35
 mode %mode%
@@ -11,24 +11,24 @@ set /a patchingnumber=1
 set /a repeatvbs=0
 set /a temperrorlev=0
 ::
-set last_build=2017/10/28
-set at=18:33
+set last_build=2017/12/14
+set at=2:25
 :: ===========================================================================
 :: WiiWare Patcher for Windows
-set version=2.1.5
+set version=2.1.6
 :: AUTHORS: KcrPL, Larsenv and PokeAcer
 :: ***************************************************************************
 :: Copyright (c) 2017 RiiConnect24, and it's (Lead) Developers
 :: ===========================================================================
 
-if not exist %appdata%\WiimmfiPatcher\temp\vbs.vbs echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>%appdata%\WiimmfiPatcher\temp\vbs.vbs
+if not exist "%appdata%\WiimmfiPatcher\temp\vbs.vbs" echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>"%appdata%\WiimmfiPatcher\temp\vbs.vbs"
 @echo off
 title Wiimmfi Patcher for WAD's v.%version% Created by @KcrPL, @Larsenv, @PokeAcer
 cls
 
 set /a patherror=0
 if "%cd%"=="%windir%\system32" set /a patherror=1
-if %patherror%==0 if not exist patcher.bat set /a patherror=2
+if %patherror%==0 if not exist "patcher.bat" set /a patherror=2
 
 :: ### Auto Update ###
 set /a WiiWarePatcher_Update_Activate=1
@@ -134,14 +134,14 @@ echo                                     :syhdyyyyso+/-`
 echo                                                                        Please wait...
 set updateversion=0.0.0
 
-if %offlinestorage%==0 if exist %TempStorage%\version.txt del %TempStorage%\version.txt /q
-if %offlinestorage%==0 if exist %TempStorage%\version.txt` del %TempStorage%\version.txt` /q
-if %offlinestorage%==0 if exist %TempStorage%\whatsnew.txt del %TempStorage%\whatsnew.txt /q
-if %offlinestorage%==0 if exist %TempStorage%\whatsnew.txt` del %TempStorage%\whatsnew.txt` /q
+if %offlinestorage%==0 if exist "%TempStorage%\version.txt" del "%TempStorage%\version.txt" /q
+if %offlinestorage%==0 if exist "%TempStorage%\version.txt`" del "%TempStorage%\version.txt`" /q
+if %offlinestorage%==0 if exist "%TempStorage%\whatsnew.txt" del "%TempStorage%\whatsnew.txt" /q
+if %offlinestorage%==0 if exist "%TempStorage%\whatsnew.txt`" del "%TempStorage%\whatsnew.txt`" /q
 
-if not exist %TempStorage% md %TempStorage%
-if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/whatsnew.txt', '%TempStorage%/whatsnew.txt')"
-if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/version.txt', '%TempStorage%/version.txt')"
+if not exist "%TempStorage%" md "%TempStorage%"	
+if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/whatsnew.txt"', '"%TempStorage%/whatsnew.txt"')"
+if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/version.txt"', '"%TempStorage%/version.txt"')"
 
 	if %offlinestorage%==0 set /a temperrorlev=%errorlevel%
 
@@ -153,9 +153,9 @@ set /a updateserver=1
 if exist "%TempStorage%\version.txt`" ren "%TempStorage%\version.txt`" "version.txt"
 if exist "%TempStorage%\whatsnew.txt`" ren "%TempStorage%\whatsnew.txt`" "whatsnew.txt"
 
-if exist %TempStorage%\version.txt set /p updateversion=<%TempStorage%\version.txt
-if not exist %TempStorage%\version.txt set /a updateavailable=0
-if %WiiWarePatcher_Update_Activate%==1 if exist %TempStorage%\version.txt set /a updateavailable=1
+if exist "%TempStorage%\version.txt" set /p updateversion=<"%TempStorage%\version.txt"
+if not exist "%TempStorage%\version.txt" set /a updateavailable=0
+if %WiiWarePatcher_Update_Activate%==1 if exist "%TempStorage%\version.txt" set /a updateavailable=1
 if %updateversion%==%version% set /a updateavailable=0
 
 if %WiiWarePatcher_Update_Activate%==1 if %updateavailable%==1 set /a updateserver=2
@@ -295,12 +295,12 @@ if exist patcher.bat` del patch.bat` /q 2> nul
 if exist libWiiSharp.dll` del  libWiiSharp.dll` /q 2> nul
 if exist Sharpii.exe` del Sharpii.exe` /q 2> nul
 
-powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/WadInstaller.dll', 'WadInstaller.dll`')"
-powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/WiiwarePatcher.exe', 'WiiwarePatcher.exe`')"
-powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/lzx.exe', 'lzx.exe`')"
-powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/patcher.bat', 'patcher.bat`')"
-powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/libWiiSharp.dll', 'libWiiSharp.dll`')"
-powershell -command "(new-object System.Net.WebClient).DownloadFile('%FilesHostedOn%/Sharpii.exe', 'Sharpii.exe`')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/WadInstaller.dll"', '"WadInstaller.dll`"')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/WiiwarePatcher.exe"', '"WiiwarePatcher.exe`"')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/lzx.exe"', '"lzx.exe`"')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/patcher.bat"', '"patcher.bat`"')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/libWiiSharp.dll"', '"libWiiSharp.dll`"')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/Sharpii.exe"', '"Sharpii.exe`"')"
 
 if %update%==1 if not exist WadInstaller.dll` goto error_update_not_available
 if %update%==1 if not exist WiiwarePatcher.exe` goto error_update_not_available
@@ -321,7 +321,8 @@ ren lzx.exe` lzx.exe
 ren libWiiSharp.dll` libWiiSharp.dll
 ren Sharpii.exe` Sharpii.exe
 
-echo ping localhost -n 2 >>temp.bat
+echo echo off >>temp.bat
+echo ping localhost -n 2^>NUL >>temp.bat
 echo del patcher.bat /q >>temp.bat
 echo ren patcher.bat` patcher.bat >>temp.bat
 echo start patcher.bat >>temp.bat
@@ -332,13 +333,13 @@ exit
 exit
 :whatsnew
 cls
-if not exist %TempStorage%\whatsnew.txt goto whatsnew_notexist
+if not exist "%TempStorage%\whatsnew.txt" goto whatsnew_notexist
 echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version%. (Compiled on %last_build% at %at%)
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo.
 echo What's new in update %updateversion%?
 echo.
-type %TempStorage%\whatsnew.txt
+type "%TempStorage%\whatsnew.txt"
 pause>NUL
 goto update_notice
 :whatsnew_notexist
@@ -389,15 +390,15 @@ goto debug_1
 :debug_reset_database
 cls
 echo Executing command...
-rmdir %appdata%\WiimmfiPatcher /s /q
-if not exist %appdata%\WiimmfiPatcher set output=OK! It seems that database is deleted, try restarting this program.
-if exist %appdata%\WiimmfiPatcher set output=FAIL! The Database has not been deleted.
+rmdir "%appdata%\WiimmfiPatcher" /s /q
+if not exist "%appdata%\WiimmfiPatcher" set output=OK! It seems that database is deleted, try restarting this program.
+if exist "%appdata%\WiimmfiPatcher" set output=FAIL! The Database has not been deleted.
 goto debug_1
 :debug_patched_Del
 cls
 echo Executing command...
-rmdir backup-wads /s /q
-rmdir wiimmfi-wads /s /q
+rmdir "backup-wads" /s /q
+rmdir "wiimmfi-wads" /s /q
 set output=OK! It seems that 2 folders has been deleted
 goto debug_1
 :debug_cmd
@@ -766,7 +767,7 @@ echo                                     :syhdyyyyso+/-`
 pause>NUL
 goto begin_main
 :end
-if not exist %appdata%\WiimmfiPatcher\ndlaunch.id echo e >>%appdata%\WiimmfiPatcher\ndlaunch.id
+if not exist "%appdata%\WiimmfiPatcher\ndlaunch.id" echo e >>"%appdata%\WiimmfiPatcher\ndlaunch.id"
 set /a exiting=10
 set /a timeouterror=1
 timeout 1 /nobreak >NUL && set /a timeouterror=0
