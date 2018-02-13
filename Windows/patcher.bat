@@ -18,12 +18,12 @@ set at=2:25
 set version=2.1.6
 :: AUTHORS: KcrPL, Larsenv and PokeAcer
 :: ***************************************************************************
-:: Copyright (c) 2017 RiiConnect24, and it's (Lead) Developers
+:: Copyright (c) 2017 RiiConnect24, and its (Lead) Developers
 :: ===========================================================================
 
-if not exist "%appdata%\WiimmfiPatcher\temp\vbs.vbs" echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>"%appdata%\WiimmfiPatcher\temp\vbs.vbs"
+if not exist "%appdata%\WiimmfiPatcher\temp\vbs.vbs" echo x=msgbox("Please click OK when the patching has finished.") >>"%appdata%\WiimmfiPatcher\temp\vbs.vbs"
 @echo off
-title Wiimmfi Patcher for WAD's v.%version% Created by @KcrPL, @Larsenv, @PokeAcer
+title Wiimmfi Patcher for WADs v.%version% Created by @KcrPL, @Larsenv, @PokeAcer
 cls
 
 set /a patherror=0
@@ -54,9 +54,9 @@ if %patherror%==1 echo :--------------------------------------------------------
 if %patherror%==1 echo : Warning: Please run this application without admin privilages. :
 if %patherror%==1 echo :----------------------------------------------------------------:
 
-if %patherror%==2 echo :------------------------------------------------------------------------------------------------------:
-if %patherror%==2 echo : Warning: patcher.bat not found. You may be running this application from unknown and untrusted source:
-if %patherror%==2 echo :------------------------------------------------------------------------------------------------------:
+if %patherror%==2 echo :---------------------------------------------------------------------------------------------------------:
+if %patherror%==2 echo : Warning: patcher.bat not found. You may be running this application from an unknown and untrusted source:
+if %patherror%==2 echo :---------------------------------------------------------------------------------------------------------:
 
 if %WiiWarePatcher_Update_Activate%==0 echo :------------------------------------------------------------------------------------------------------:
 if %WiiWarePatcher_Update_Activate%==0 echo : Warning: Auto updates are disabled.                                                                  :
@@ -68,10 +68,10 @@ echo             :mdmmN+`mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.
 echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN   Play Wii games online after Nintendo WFC shutdown!
 echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd    Press any button to continue
 echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
-echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+  (Please mail us at support@riiconnect24.net if you have problems)
-echo             mmmmms smMMMMMMMMMmddMMmmNmNMMMMMMMMMMMM:
-echo            `mmmmmo hNMMMMMMMMMmddNMMMNNMMMMMMMMMMMMM.
-echo            -mmmmm/ dNMMMMMMMMMNmddMMMNdhdMMMMMMMMMMN
+echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+ 
+echo             mmmmms smMMMMMMMMMmddMMmmNmNMMMMMMMMMMMM: 
+echo            `mmmmmo hNMMMMMMMMMmddNMMMNNMMMMMMMMMMMMM.  Please mail us at support@riiconnect24.net if
+echo            -mmmmm/ dNMMMMMMMMMNmddMMMNdhdMMMMMMMMMMN   you encounter any problems while patching.
 echo            :mmmmm-`mNMMMMMMMMNNmmmNMMNmmmMMMMMMMMMMd
 echo            +mmmmN.-mNMMMMMMMMMNmmmmMMMMMMMMMMMMMMMMy
 echo            smmmmm`/mMMMMMMMMMNNmmmmNMMMMNMMNMMMMMNmy.
@@ -391,7 +391,7 @@ goto debug_1
 cls
 echo Executing command...
 rmdir "%appdata%\WiimmfiPatcher" /s /q
-if not exist "%appdata%\WiimmfiPatcher" set output=OK! It seems that database is deleted, try restarting this program.
+if not exist "%appdata%\WiimmfiPatcher" set output=OK! It seems that the database is deleted, try restarting this program.
 if exist "%appdata%\WiimmfiPatcher" set output=FAIL! The Database has not been deleted.
 goto debug_1
 :debug_patched_Del
@@ -399,7 +399,7 @@ cls
 echo Executing command...
 rmdir "backup-wads" /s /q
 rmdir "wiimmfi-wads" /s /q
-set output=OK! It seems that 2 folders has been deleted
+set output=OK! 2 folders have been deleted.
 goto debug_1
 :debug_cmd
 cls
@@ -417,7 +417,7 @@ if not exist lzx.exe set exist=0
 if not exist WadInstaller.dll set exist=0
 if not exist WiiwarePatcher.exe set exist=0
 if %exist%==0 set output=FAIL! Files are corrupted. Redownload the package.
-if %exist%==1 set output=OK! It seems that every file is in it's place.
+if %exist%==1 set output=OK! All files seem to be in their corresponding places.
 goto debug_1
 :debug_check_comp
 cls
@@ -425,7 +425,7 @@ echo Executing command...
 set check=1
 timeout 3 /nobreak >NUL || set check=0
 if %check%==1 set output=OK! Program will work correctly
-if %check%==0 set output=FAIL! Legacy PC found, some commands may not work correct but the program will work and do it's job.
+if %check%==0 set output=FAIL! Legacy PC found, some commands may not work correctly, but the program will still work and do its job.
 goto debug_1
 :files_req_err
 set /a update=0
@@ -444,7 +444,7 @@ echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
 echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo    /---\   ERROR.
-echo   /     \  Some files needed to run this program wasn't found.
+echo   /     \  Some files needed to run this program weren't found.
 echo  /   !   \ Press any button to download these files.
 echo  ---------
 echo ------------------------------------------------------------------------------------------------------------------------------
@@ -476,12 +476,12 @@ goto firststart
 :choose_patch_type
 cls
 echo.
-echo :========================================================:
-echo : WiiWare Patcher Update System.                         :
-if %updateserver%==1 echo : The latest version is installed. Press C to read more. :
-if %updateserver%==2 echo : An Update is available. Press C to read more.          :
-if %updateserver%==0 echo : A Update Server is not available. Press C to read more :
-echo :========================================================:
+echo :===========================================================:
+echo : WiiWare Patcher Update System.                            :
+if %updateserver%==1 echo : The latest version is installed. Press C to read more.    :
+if %updateserver%==2 echo : An Update is available. Press C to read more.             :
+if %updateserver%==0 echo : The Update Server is not available. Press C to read more. :
+echo :===========================================================:
 echo             :mdmmN+`mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.
 	echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN
 echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd
@@ -523,7 +523,7 @@ if %updateserver%==2 goto update_notice
 
 if %updateserver%==0 echo Update server is not available.
 if %updateserver%==0 echo We could not connect to the update server. Please check your internet connection. 
-if %updateserver%==0 echo It can also mean that the server is under maintance now.
+if %updateserver%==0 echo This could also mean that the server is undergoing maintenance at the moment.
 pause>NUL
 goto choose_patch_type
 :wii_speak_patch
@@ -542,10 +542,10 @@ echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd
 echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
 echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
 echo ------------------------------------------------------------------------------------------------------------------------------
-echo     Please choose your Wii Speak WAD region to download and patch.
+echo     Please choose the Wii Speak WAD region to download and patch.
 echo.
 echo.
-echo  1. USA  2. PAL  3. JPN  4. KOR  5. Go back.
+echo     1. USA  2. PAL  3. JPN  4. KOR  5. Go back.
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo            mmmmmh ymMMMMMMMMMNNmmmNmNNNMNNMMMMNyyhhh`
 echo           `mmmmmy hmMMNMNNMMMNNmmmmmdNMMNmmMMMMhyhhy
@@ -595,7 +595,7 @@ echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd
 echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
 echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
 echo ------------------------------------------------------------------------------------------------------------------------------
-echo     Please wait. We are now downloading and patching the Wii Speak Channel ;)...
+echo     Please wait... We are now downloading and patching the Wii Speak Channel ;)
 echo.
 echo.
 echo.
@@ -635,8 +635,8 @@ echo ---------------------------------------------------------------------------
 echo.
 echo Let's begin.
 echo.
-echo In order to patch wad file, I need an wad file.
-echo So, if you can please copy any wad file to this directory where I am.
+echo In order to patch a wad file, I will need one first.
+echo Please copy your it to the location where I am.
 echo.
 if %rep%==1 if exist "*.wad" set /a cor=1
 if %rep%==1 if exist "*.wad" goto letsbegin
@@ -678,8 +678,8 @@ echo Wiimmfi WiiWarePatcher - Larsenv, KcrPL, PokeAcer. v%version%. Compiled on 
 echo ------------------------------------------------------------------------------------------------------------------------
 
 echo.
-echo Patching file: %%~nf
-echo Total ammount of files to patch: %file_counter%
+echo File to patch:              %%~nf
+echo Amount of files to patch:   %file_counter%
 echo.
 copy /b "%%f" backup-wads >NUL
 set /a temperrorlev=%errorlevel%
@@ -750,7 +750,7 @@ echo  --------- Failing module: %modul%
 echo.
 if not %temperrorlev%==-532459699 echo.
 if %temperrorlev%==-532459699 echo  Please check your internet connection.
-echo       Press any key to start patching again.
+echo       Press any key to retry.
 echo ---------------------------------------------------------------------------------------------------------------------------
 echo           :mdmmmo-mNNNNNNNNNNdyo++sssyNMMMMMMMMMhs+-
 echo          .+mmdhhmmmNNNNNNmdysooooosssomMMMNNNMMMm
@@ -779,8 +779,8 @@ echo.
 echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version%. Compiled on %last_build% at %at%
 echo ------------------------------------------------------------------------------------------------------------------------
 echo.
-if %patchingok%==1 echo Patched files are in wiimmfi-wads folder
-if %patchingok%==1 echo Backed up wads are in backup-wads folder
+if %patchingok%==1 echo The patched files should be in the "wiimmfi-wads" folder.
+if %patchingok%==1 echo Backed up wads are in the "backup-wads" folder.
 if %patchingok%==1 echo.
 echo Exiting the patcher in...
 if %exiting%==10 echo :----------: 10
