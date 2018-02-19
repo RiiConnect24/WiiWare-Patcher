@@ -636,7 +636,7 @@ echo.
 echo Let's begin.
 echo.
 echo In order to patch a wad file, I will need one first.
-echo Please copy your it to the location where I am.
+echo Please copy it to the location where I am.
 echo.
 if %rep%==1 if exist "*.wad" set /a cor=1
 if %rep%==1 if exist "*.wad" goto letsbegin
