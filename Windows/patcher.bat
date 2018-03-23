@@ -11,11 +11,11 @@ set /a patchingnumber=1
 set /a repeatvbs=0
 set /a temperrorlev=0
 ::
-set last_build=2017/12/14
-set at=2:25
+set last_build=2018/03/23
+set at=16:34
 :: ===========================================================================
 :: WiiWare Patcher for Windows
-set version=2.1.6
+set version=2.1.7
 :: AUTHORS: KcrPL, Larsenv and PokeAcer
 :: ***************************************************************************
 :: Copyright (c) 2017 RiiConnect24, and it's (Lead) Developers
@@ -144,11 +144,9 @@ if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 call powershell -c
 if %WiiWarePatcher_Update_Activate%==1 if %offlinestorage%==0 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/version.txt"', '"%TempStorage%/version.txt"')"
 
 	if %offlinestorage%==0 set /a temperrorlev=%errorlevel%
-
 set /a updateserver=1
 	::Bind error codes to errors here
 	if %offlinestorage%==0 if not %errorlevel%==0 set /a updateserver=0
-
 
 if exist "%TempStorage%\version.txt`" ren "%TempStorage%\version.txt`" "version.txt"
 if exist "%TempStorage%\whatsnew.txt`" ren "%TempStorage%\whatsnew.txt`" "whatsnew.txt"
@@ -157,7 +155,6 @@ if exist "%TempStorage%\version.txt" set /p updateversion=<"%TempStorage%\versio
 if not exist "%TempStorage%\version.txt" set /a updateavailable=0
 if %WiiWarePatcher_Update_Activate%==1 if exist "%TempStorage%\version.txt" set /a updateavailable=1
 if %updateversion%==%version% set /a updateavailable=0
-
 if %WiiWarePatcher_Update_Activate%==1 if %updateavailable%==1 set /a updateserver=2
 if %WiiWarePatcher_Update_Activate%==1 if %updateavailable%==1 goto update_notice
 
@@ -169,7 +166,6 @@ if not exist WiiwarePatcher.exe goto files_req_err
 
 set /a errorwinxp=0
 timeout -0 /nobreak >NUL || set /a errorwinxp=1
-if %errorwinxp%==1 goto winxp_notice
 
 goto main_fade_out
 :main_fade_out
@@ -521,9 +517,12 @@ echo.
 if %updateserver%==1 echo The latest version of WiiWare Patcher is now installed. (v%version%)
 if %updateserver%==2 goto update_notice
 
-if %updateserver%==0 echo Update server is not available.
-if %updateserver%==0 echo We could not connect to the update server. Please check your internet connection. 
-if %updateserver%==0 echo It can also mean that the server is under maintance now.
+if %errorwinxp%==0 if %updateserver%==0 echo Update server is not available.
+if %errorwinxp%==0 if %updateserver%==0 echo We could not connect to the update server. Please check your internet connection. 
+if %errorwinxp%==0 if %updateserver%==0 echo It can also mean that the server is under maintance now.
+
+if %errorwinxp%==1 if %updateserver%==0 echo Update server is not available.
+if %errorwinxp%==1 if %updateserver%==0 echo Updating is not available on Windows XP.
 pause>NUL
 goto choose_patch_type
 :wii_speak_patch
@@ -617,6 +616,9 @@ echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 
 sharpii NUSD -id %regiontype_speak% -v 512 -all >NUL
+set /a temperrorlev=%errorlevel%
+set modul=Sharpii.exe
+if not %temperrorlev%==0 goto error_patching
 
 move "%regiontype_speak%v512\%regiontype_speak%v512.wad" "Wii_Speak_Channel_%region%.wad" >NUL
 
@@ -748,8 +750,9 @@ echo   /     \  There was an error while patching.
 echo  /   !   \ Error Code: %temperrorlev%
 echo  --------- Failing module: %modul%
 echo.
-if not %temperrorlev%==-532459699 echo.
-if %temperrorlev%==-532459699 echo  Please check your internet connection.
+if %temperrorlev%==-532459699 echo Please check your internet connection.
+if %temperrorlev%==-2146232576 echo Please install .NET Framework 3.5, then try to patch again.
+if %temperrorlev%==-1073741515 echo Sharpii general failure. Try to install .NET Framework 3.5 and try again.
 echo       Press any key to start patching again.
 echo ---------------------------------------------------------------------------------------------------------------------------
 echo           :mdmmmo-mNNNNNNNNNNdyo++sssyNMMMMMMMMMhs+-
