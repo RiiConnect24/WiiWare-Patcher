@@ -149,7 +149,7 @@ int main()
     ifstream file("00000001.app", std::ifstream::binary);
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-        cerr << "Are you trying to run auto-wiiware-patcher? Please run patch.bat instead." << endl;
+        cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.bat instead." << endl;
         system("pause");
         return -1;
     }
