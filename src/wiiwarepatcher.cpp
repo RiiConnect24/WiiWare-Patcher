@@ -143,12 +143,13 @@ void ReplaceURLs(char *buffer, size_t len) {
 
 int main()
 {
-    cout << "Wiiware Patcher 0.2" << endl;
+    cout << "WiiWare Patcher 0.2" << endl;
 
 
     ifstream file("00000001.app", std::ifstream::binary);
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
+        cerr << "Are you trying to run auto-wiiware-patcher? Please run patch.bat instead." << endl;
         system("pause");
         return -1;
     }
@@ -157,6 +158,7 @@ int main()
     int ret = system("lzx.exe -d 00000001.app");
     if(ret != 0) {
         cerr << "Failed to encode 00000001.app" << endl;
+        cerr << "Are you sure that a program called lzx is in this directory?" << endl;
         system("pause");
         return -2;
     }
@@ -197,12 +199,11 @@ int main()
     ret = system("lzx.exe -evb 00000001.app");
     if(ret != 0) {
         cerr << "Failed to decode 00000001.app" << endl;
+        cerr << "Are you sure that a program called lzx is in this directory?" << endl;
         system("pause");
         return -4;
     }
     cout << "Exit code: " << ret << endl;
-
-    system("pause");
 
 
     return 0;
