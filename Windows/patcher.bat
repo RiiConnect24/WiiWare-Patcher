@@ -1,4 +1,7 @@
 @echo off
+REM --- Important for file counter to work ---
+setlocal ENABLEDELAYEDEXPANSION
+rem ---
 if exist "C:\Users\%username%\Desktop\DebugPatcher.txt" goto debug_failsafe_begin
 goto begin
 :begin
@@ -8,20 +11,18 @@ set mode=126,35
 mode %mode%
 set /a cor=0
 set /a patchingnumber=1
-set /a repeatvbs=0
 set /a temperrorlev=0
 ::
-set last_build=2018/03/23
-set at=16:34
+set last_build=2018/04/14
+set at=22:15
 :: ===========================================================================
 :: WiiWare Patcher for Windows
-set version=2.1.7
+set version=2.1.8
 :: AUTHORS: KcrPL, Larsenv and PokeAcer
 :: ***************************************************************************
 :: Copyright (c) 2017 RiiConnect24, and it's (Lead) Developers
 :: ===========================================================================
 
-if not exist "%appdata%\WiimmfiPatcher\temp\vbs.vbs" echo x=msgbox("When the operation will be done, click any button." ,64, "Wiimmfi WAD Patcher") >>"%appdata%\WiimmfiPatcher\temp\vbs.vbs"
 @echo off
 title Wiimmfi Patcher for WAD's v.%version% Created by @KcrPL, @Larsenv, @PokeAcer
 cls
@@ -44,7 +45,7 @@ goto begin_main
 :begin_main
 mode 126,40
 cls
-echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version%. (Compiled on %last_build% at %at%)
+echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version% (Compiled on %last_build% at %at%)
 if %WiiWarePatcher_Update_Activate%==1 if %patherror%==0 echo              `..````
 if %WiiWarePatcher_Update_Activate%==1 if %patherror%==0 echo              yNNNNNNNNMNNmmmmdddhhhyyyysssooo+++/:--.`
 if %WiiWarePatcher_Update_Activate%==1 if %patherror%==0 echo              ddmNNd:dNMMMMNMMMMMMMMMMMMMMMMMMMMMMMMMMs
@@ -479,7 +480,7 @@ if %updateserver%==2 echo : An Update is available. Press C to read more.       
 if %updateserver%==0 echo : A Update Server is not available. Press C to read more :
 echo :========================================================:
 echo             :mdmmN+`mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.
-	echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN
+echo             /mmmmN:-mNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN
 echo             ommmmN.:mMMMMMMMMMMMMmNMMMMMMMMMMMMMMMMMd
 echo             smmmmm`+mMMMMMMMMMNhMNNMNNMMMMMMMMMMMMMMy
 echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
@@ -523,6 +524,8 @@ if %errorwinxp%==0 if %updateserver%==0 echo It can also mean that the server is
 
 if %errorwinxp%==1 if %updateserver%==0 echo Update server is not available.
 if %errorwinxp%==1 if %updateserver%==0 echo Updating is not available on Windows XP.
+echo.
+echo Press any key to continue.
 pause>NUL
 goto choose_patch_type
 :wii_speak_patch
@@ -637,8 +640,8 @@ echo ---------------------------------------------------------------------------
 echo.
 echo Let's begin.
 echo.
-echo In order to patch wad file, I need an wad file.
-echo So, if you can please copy any wad file to this directory where I am.
+echo In order to patch wad file, I need a wad file.
+echo So, if you can, please copy any wad file to this directory where I am.
 echo.
 if %rep%==1 if exist "*.wad" set /a cor=1
 if %rep%==1 if exist "*.wad" goto letsbegin
@@ -668,6 +671,7 @@ ping localhost -n 3 >NUL
 if not exist "*.wad" goto letsbegin_error
 echo.
 set modul=NUL
+set /a patching_file=1
 rmdir temp /s /q
 
 if not exist temp md temp
@@ -676,12 +680,11 @@ if not exist backup-wads md backup-wads
 
 for %%f in ("*.wad") do (
 cls
-echo Wiimmfi WiiWarePatcher - Larsenv, KcrPL, PokeAcer. v%version%. Compiled on %last_build% at %at%
+echo Wiimmfi WiiWarePatcher - Larsenv, KcrPL, PokeAcer. v%version% Compiled on %last_build% at %at%
 echo ------------------------------------------------------------------------------------------------------------------------
-
 echo.
-echo Patching file: %%~nf
-echo Total ammount of files to patch: %file_counter%
+echo Patching file [!patching_file!] out of [%file_counter%]
+echo File name: %%~nf
 echo.
 copy /b "%%f" backup-wads >NUL
 set /a temperrorlev=%errorlevel%
@@ -698,9 +701,8 @@ set /a temperrorlev=%errorlevel%
 set modul=move.exe
 if not %temperrorlev%==0 goto error_patching
 
-if %repeatvbs%==0 start %appdata%\WiimmfiPatcher\temp\vbs.vbs
 set patchdebug=%%~nf
-WiiWarePatcher.exe
+call WiiWarePatcher.exe
 set /a temperrorlev=%errorlevel%
 set modul=WiiWarePatcher.exe
 if not %temperrorlev%==0 goto error_patching
@@ -720,8 +722,9 @@ set /a temperrorlev=%errorlevel%
 set modul=Sharpii.exe
 if not %temperrorlev%==0 goto error_patching
 
+set /a patching_file=%patching_file%+1
+
 rmdir temp /s /q
-set /a repeatvbs=1
 )
 cd wiimmfi-wads
 for %%a in (*.wad) do ren "%%~a" "%%~na_Wiimmfi%%~xa"
@@ -798,8 +801,8 @@ if %exiting%==2 echo :--        : 2
 if %exiting%==1 echo :-         : 1
 if %exiting%==0 echo :          :
 if %exiting%==0 if %patchingok%==2 start "C:\Users\%username%\Desktop\WiiWarePatcher\"
-if %exiting%==0 exit
+if %exiting%==0 exit /b 0
 if %timeouterror%==0 timeout 1 /nobreak >NUL
 if %timeouterror%==1 ping localhost -n 2 >NUL
 set /a exiting=%exiting%-1
-goto end1
+ goto end1
