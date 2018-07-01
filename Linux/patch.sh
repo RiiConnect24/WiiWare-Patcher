@@ -4,6 +4,12 @@ echo "This will patch any WiiWare games in this folder to be installed using a W
 
 echo "\n"
 
+if ! [ -x "$(command -v mono)" ]
+then
+	echo "Mono not found! Please learn how to install it at:\nhttps://www.mono-project.com/download/stable/#download-lin"
+	exit
+fi
+
 mkdir "wiimmfi-wads"
 mkdir "backup-wads"
 

@@ -4,6 +4,12 @@ echo "This will patch any WiiWare games in this folder to be installed using a W
 
 echo "\n"
 
+if ! [ -x "$(command -v mono)" ]
+then
+	echo "Mono not found! Please install it with:\nbrew install mono\nIf you don't have brew, learn how to install it at https://brew.sh/"
+	exit
+fi
+
 mkdir "wiimmfi-wads"
 mkdir "backup-wads"
 
