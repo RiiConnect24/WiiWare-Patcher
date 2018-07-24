@@ -163,7 +163,7 @@ if not exist Sharpii.exe goto files_req_err
 if not exist libWiiSharp.dll goto files_req_err
 if not exist lzx.exe goto files_req_err
 if not exist WadInstaller.dll goto files_req_err
-if not exist WiiWarePatcher.exe goto files_req_err
+if not exist WiiwarePatcher.exe goto files_req_err
 
 set /a errorwinxp=0
 timeout -0 /nobreak >NUL || set /a errorwinxp=1
@@ -286,34 +286,34 @@ echo                   `.              yddyo++:    `-/oymNNNNNdy+:`
 echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 if exist WadInstaller.dll` del WadInstaller.dll` /q 2> nul
-if exist WiiWarePatcher.exe` del wget.exe` /q 2> nul
+if exist WiiwarePatcher.exe` del wget.exe` /q 2> nul
 if exist lzx.exe` del xdelta3.exe` 2> nul
 if exist patcher.bat` del patch.bat` /q 2> nul
 if exist libWiiSharp.dll` del  libWiiSharp.dll` /q 2> nul
 if exist Sharpii.exe` del Sharpii.exe` /q 2> nul
 
 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/WadInstaller.dll"', '"WadInstaller.dll`"')"
-call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/WiiWarePatcher.exe"', '"WiiWarePatcher.exe`"')"
+call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/WiiwarePatcher.exe"', '"WiiwarePatcher.exe`"')"
 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/lzx.exe"', '"lzx.exe`"')"
 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/patcher.bat"', '"patcher.bat`"')"
 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/libWiiSharp.dll"', '"libWiiSharp.dll`"')"
 call powershell -command "(new-object System.Net.WebClient).DownloadFile('"%FilesHostedOn%/Sharpii.exe"', '"Sharpii.exe`"')"
 
 if %update%==1 if not exist WadInstaller.dll` goto error_update_not_available
-if %update%==1 if not exist WiiWarePatcher.exe` goto error_update_not_available
+if %update%==1 if not exist WiiwarePatcher.exe` goto error_update_not_available
 if %update%==1 if not exist lzx.exe` goto error_update_not_available
 if %update%==1 if not exist patcher.bat` goto error_update_not_available
 if %update%==1 if not exist libWiiSharp.dll` goto error_update_not_available
 if %update%==1 if not exist Sharpii.exe` goto error_update_not_available
 
 if exist WadInstaller.dll del WadInstaller.dll /q
-if exist WiiWarePatcher.exe del WiiWarePatcher.exe /q
+if exist WiiwarePatcher.exe del WiiwarePatcher.exe /q
 if exist lzx.exe del lzx.exe /q
 if exist libWiiSharp.dll del libWiiSharp.dll /q
 if exist Sharpii.exe del Sharpii.exe /q
 
 ren WadInstaller.dll` WadInstaller.dll
-ren WiiWarePatcher.exe` WiiWarePatcher.exe
+ren WiiwarePatcher.exe` WiiwarePatcher.exe
 ren lzx.exe` lzx.exe
 ren libWiiSharp.dll` libWiiSharp.dll
 ren Sharpii.exe` Sharpii.exe
@@ -412,7 +412,7 @@ if not exist Sharpii.exe set exist=0
 if not exist libWiiSharp.dll set exist=0
 if not exist lzx.exe set exist=0
 if not exist WadInstaller.dll set exist=0
-if not exist WiiWarePatcher.exe set exist=0
+if not exist WiiwarePatcher.exe set exist=0
 if %exist%==0 set output=FAIL! Files are corrupted. Redownload the package.
 if %exist%==1 set output=OK! It seems that every file is in it's place.
 goto debug_1
