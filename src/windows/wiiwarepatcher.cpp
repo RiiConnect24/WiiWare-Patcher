@@ -105,7 +105,7 @@ int main()
         cerr << "Are you trying to run auto-wiiware-patcher? Please run the patcher instead." << endl;
         return -1;
     }
-    int ret = system("lzx.exe -d 00000001.app");
+    int ret = system("./lzx.exe -d 00000001.app");
     if(ret != 0) {
         cerr << "Failed to encode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
@@ -133,7 +133,7 @@ int main()
     ofile.write(buffer, len);
     ofile.close();
     delete buffer;
-    ret = system("lzx.exe -evb 00000001.app");
+    ret = system("./lzx.exe -evb 00000001.app");
     if(ret != 0) {
         cerr << "Failed to decode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
