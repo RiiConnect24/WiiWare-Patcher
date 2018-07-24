@@ -98,7 +98,7 @@ void ReplaceURLs(char *buffer, size_t len) {
 
 int main()
 {
-    cout << "WiiWare Patcher 0.2" << endl;
+    cout << "WiiWare Patcher 1.0" << endl;
     ifstream file("00000001.app", std::ifstream::binary);
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
