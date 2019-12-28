@@ -2,6 +2,7 @@
 REM --- Important for file counter to work ---
 setlocal ENABLEDELAYEDEXPANSION
 rem ---
+cd /d "%~dp0"
 if exist "C:\Users\%username%\Desktop\DebugPatcher.txt" goto debug_failsafe_begin
 goto begin
 :begin
@@ -13,11 +14,11 @@ set /a cor=0
 set /a patchingnumber=1
 set /a temperrorlev=0
 ::
-set last_build=2018/04/14
-set at=22:15
+set last_build=2019/12/16
+set at=16:58
 :: ===========================================================================
 :: WiiWare Patcher for Windows
-set version=2.1.8
+set version=2.1.9
 :: AUTHORS: KcrPL, Larsenv and PokeAcer
 :: ***************************************************************************
 :: Copyright (c) 2017 RiiConnect24, and it's (Lead) Developers
@@ -38,11 +39,23 @@ set /a offlinestorage=0
 set FilesHostedOn=https://raw.githubusercontent.com/KcrPL/KcrPL.github.io/master/Patchers_Auto_Update/WiiWare-Patcher
 set MainFolder=%appdata%\WiiWare-Patcher
 set TempStorage=%appdata%\WiiWare-Patcher\internet\temp
-
+set aio_assisted=0
 
 if exist temp.bat del temp.bat /q
+
+if exist RC24PATCHER_START_PATCHING_SCRIPT goto rc24_aio_patcher_script_enable
+
 goto begin_main
+
+:rc24_aio_patcher_script_enable
+set /a aio_assisted=1
+set /a errorwinxp=0
+set /a updateserver=1
+goto choose_patch_type
+
+
 :begin_main
+if %aio_assisted%==1 exit
 mode 126,40
 cls
 echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version% (Compiled on %last_build% at %at%)
@@ -226,7 +239,7 @@ echo             hmmmmh omMMMMMMMMMmhNMMMmNNNNMMMMMMMMMMM+
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo    /---\   An Update is available.
 echo   /     \  An Update for this program is available. We suggest updating the WiiWare Patcher to the latest version.
-echo  /   !   \
+echo  /   ^^!   \
 echo  ---------  Current version: %version%
 echo             New version: %updateversion%
 echo                       1. Update                      2. Dismiss               3. What's new in this update?
@@ -462,14 +475,6 @@ echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 pause>NUL
 goto update_files
-:ndstart
-cls
-echo Hi.
-ping localhost -n 3 >NUL
-goto intro2_frs2
-:firststart
-cls
-goto firststart
 :choose_patch_type
 cls
 echo.
@@ -488,7 +493,8 @@ echo ---------------------------------------------------------------------------
 echo     Please choose what you want to patch.
 echo.
 echo.
-echo  1. I want to patch normal games.  2. I want to patch Wii Speak.
+if %aio_assisted%==0 echo  1. I want to patch normal games.  2. I want to patch Wii Speak.
+if %aio_assisted%==1 echo  1. I want to patch normal games.  2. I want to patch Wii Speak. 3. Return to RiiConnect24 Patcher
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo            mmmmmh ymMMMMMMMMMNNmmmNmNNNMNNMMMMNyyhhh`
 echo           `mmmmmy hmMMNMNNMMMNNmmmmmdNMMNmmMMMMhyhhy
@@ -510,6 +516,7 @@ if %s%==1 goto letsbegin
 if %s%==2 goto wii_speak_patch
 if %s%==c goto more_info_update
 if %s%==C goto more_info_update
+if %aio_assisted%==1 if %s%==3 GOTO:EOF
 goto choose_patch_type
 :more_info_update
 cls
@@ -641,7 +648,8 @@ echo.
 echo Let's begin.
 echo.
 echo In order to patch wad file, I need a wad file.
-echo So, if you can, please copy any wad file to this directory where I am.
+if %aio_assisted%==0 echo So, if you can, please copy any wad file to this directory where I am.
+if %aio_assisted%==1 echo Please copy the .WAD file to WiiWare-Patcher folder that was made by RiiConnect24 Patcher.
 echo.
 if %rep%==1 if exist "*.wad" set /a cor=1
 if %rep%==1 if exist "*.wad" goto letsbegin
@@ -712,25 +720,23 @@ set /a temperrorlev=%errorlevel%
 set modul=move.exe
 if not %temperrorlev%==0 goto error_patching
 
-del "%%f"
+del "%%f" >NUL
 set /a temperrorlev=%errorlevel%
 set modul=del.exe
 if not %temperrorlev%==0 goto error_patching
 
-Sharpii.exe WAD -p temp "wiimmfi-wads/%%f"
+Sharpii.exe WAD -p temp "wiimmfi-wads/%%f" >NUL
 set /a temperrorlev=%errorlevel%
 set modul=Sharpii.exe
 if not %temperrorlev%==0 goto error_patching
 
 set /a patching_file=%patching_file%+1
 
-rmdir temp /s /q
+rmdir temp /s /q >NUL
 )
 cd wiimmfi-wads
-for %%a in (*.wad) do ren "%%~a" "%%~na_Wiimmfi%%~xa"
-cd wiimmfi-wads
+for %%a in (*.wad) do ren "%%~a" "%%~na_Wiimmfi%%~xa" >NUL
 cd..
-pause
 goto end
 :error_patching
 cls
@@ -756,7 +762,8 @@ echo.
 if %temperrorlev%==-532459699 echo Please check your internet connection.
 if %temperrorlev%==-2146232576 echo Please install .NET Framework 3.5, then try to patch again.
 if %temperrorlev%==-1073741515 echo Sharpii general failure. Try to install .NET Framework 3.5 and try again.
-echo       Press any key to start patching again.
+if %aio_assisted%==0 echo       Press any key to return to main menu.
+if %aio_assisted%==1 echo       Press any key to return to RiiConnect24 Patcher.
 echo ---------------------------------------------------------------------------------------------------------------------------
 echo           :mdmmmo-mNNNNNNNNNNdyo++sssyNMMMMMMMMMhs+-
 echo          .+mmdhhmmmNNNNNNmdysooooosssomMMMNNNMMMm
@@ -771,7 +778,8 @@ echo                   `.              yddyo++:    `-/oymNNNNNdy+:`
 echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 pause>NUL
-goto begin_main
+if %aio_assisted%==0 goto begin_main
+if %aio_assisted%==1 GOTO:EOF
 :end
 if not exist "%appdata%\WiimmfiPatcher\ndlaunch.id" echo e >>"%appdata%\WiimmfiPatcher\ndlaunch.id"
 set /a exiting=10
@@ -786,9 +794,12 @@ echo Wiimmfi WiiWarePatcher - (C) Larsenv, (C) KcrPL, (C) PokeAcer. v%version%. 
 echo ------------------------------------------------------------------------------------------------------------------------
 echo.
 if %patchingok%==1 echo Patched files are in wiimmfi-wads folder
-if %patchingok%==1 echo Backed up wads are in backup-wads folder
+if %patchingok%==1 echo Original wads are in backup-wads folder
 if %patchingok%==1 echo.
-echo Exiting the patcher in...
+
+if %aio_assisted%==0 echo Exiting the patcher in...
+if %aio_assisted%==1 echo Returning to RiiConnect24 Patcher in...
+
 if %exiting%==10 echo :----------: 10
 if %exiting%==9 echo :--------- : 9
 if %exiting%==8 echo :--------  : 8
@@ -801,8 +812,11 @@ if %exiting%==2 echo :--        : 2
 if %exiting%==1 echo :-         : 1
 if %exiting%==0 echo :          :
 if %exiting%==0 if %patchingok%==2 start "C:\Users\%username%\Desktop\WiiWarePatcher\"
-if %exiting%==0 exit /b 0
+
+if %aio_assisted%==0 if %exiting%==0 exit /b 0
+if %aio_assisted%==1 if %exiting%==0 GOTO:EOF
+
 if %timeouterror%==0 timeout 1 /nobreak >NUL
 if %timeouterror%==1 ping localhost -n 2 >NUL
 set /a exiting=%exiting%-1
- goto end1
+goto end1
