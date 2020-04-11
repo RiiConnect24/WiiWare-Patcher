@@ -1,7 +1,8 @@
 #! /bin/bash
 
 sharpii="https://nxnt.link/sharpii1-1-1-${sys,,}" # end link manually updated on my end - twosecslater
-
+lzx="https://github.com/urmum-69/auto-wiiware-patcher/blob/master/bin/lzx" #temporary URL -- will change this later
+wiiwarepatcher="https://github.com/urmum-69/auto-wiiware-patcher/blob/master/bin/" #temporary URL -- will change this later
 error() {
     sc 0 "Error"
     printf "An error has occurred.\n\n* Task: $task\n* Command: $BASH_COMMAND\n* Line: $1\n* Exit code: $2\n\n" | fold -s -w $(tput cols)
@@ -67,7 +68,21 @@ download() {
         printf "* Downloading Sharpii for $kernel $arch...\n"
         curl -sL "$sharpii" -o sharpii
     fi
+    if [[ -e lzx ]]; then
+        printf "* LZX appears to exist. Not downloading.\n"
+    else
+        printf "* Downloading LZX for $kernel $arch...\n"
+        curl -sL $lzx-$kernel-$arch -o lzx
+    fi
+    if [[ -e wiiwarepatcher ]]; then
+        printf "* wiiwarepatcher appears to exist. Not downloading.\n"
+    else
+        printf "* Downloading wiiwarepatcher for $kernel $arch...\n"
+        curl -sL $wiiwarepatcher-$kernel-$arch -o wiiwarepatcher
+    fi
+    [[ ! -x lzx ]] && chmod +x lzx || true
     [[ ! -x sharpii ]] && chmod +x sharpii || true
+    [[ ! -x wiiwarepatcher ]] && chmod +x wiiwarepatcher || true
     cd ..
 }
 
