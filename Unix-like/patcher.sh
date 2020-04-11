@@ -1,8 +1,7 @@
 #! /bin/bash
 
-sharpii="https://nxnt.link/sharpii1-1-1-${sys,,}" # end link manually updated on my end - twosecslater
-lzx="https://github.com/urmum-69/auto-wiiware-patcher/blob/master/bin/lzx" #temporary URL -- will change this later
-wiiwarepatcher="https://github.com/urmum-69/auto-wiiware-patcher/blob/master/bin/" #temporary URL -- will change this later
+lzx="https://github.com/urmum-69/auto-wiiware-patcher/raw/master/bin/lzx" #temporary URL -- will change this later
+wiiwarepatcher="https://github.com/urmum-69/auto-wiiware-patcher/raw/master/bin/WiiwarePatcher" #temporary URL -- will change this later
 error() {
     sc 0 "Error"
     printf "An error has occurred.\n\n* Task: $task\n* Command: $BASH_COMMAND\n* Line: $1\n* Exit code: $2\n\n" | fold -s -w $(tput cols)
@@ -38,6 +37,7 @@ else
 fi
 
 printf "\n* Detected kernel: $kernel\n* Detected architecture: $arch\n"
+sharpii="https://nxnt.link/sharpii1-1-1-${sys,,}" # end link manually updated on my end - twosecslater
 
 deps() {
     task="Check dependencies, and automatically install if needed and able to."
