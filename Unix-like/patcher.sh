@@ -1,7 +1,8 @@
 #! /bin/bash
 
-lzx="https://github.com/urmum-69/auto-wiiware-patcher/raw/master/bin/lzx" #temporary URL -- will change this later
-wiiwarepatcher="https://github.com/urmum-69/auto-wiiware-patcher/raw/master/bin/WiiwarePatcher" #temporary URL -- will change this later
+lzx="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/lzx-"
+wiiwarepatcher="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/WiiwarePatcher-"
+sharpii="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/Sharpii-Net-Core-1.1.1-"
 error() {
     sc 0 "Error"
     printf "An error has occurred.\n\n* Task: $task\n* Command: $BASH_COMMAND\n* Line: $1\n* Exit code: $2\n\n" | fold -s -w $(tput cols)
@@ -29,15 +30,12 @@ if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
     else
         printf "Unable to use your architecture: $(uname -m)\n$helpmsg\n"; exit
     fi
-    sys=$arch
 else
     kernel="$(uname -s)" # darwin
     arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
-    sys=$kernel
 fi
 
 printf "\n* Detected kernel: $kernel\n* Detected architecture: $arch\n"
-sharpii="https://nxnt.link/sharpii1-1-1-${sys,,}" # end link manually updated on my end - twosecslater
 
 deps() {
     task="Check dependencies, and automatically install if needed and able to."
@@ -66,19 +64,19 @@ download() {
         printf "* Sharpii appears to exist. Not downloading.\n"
     else
         printf "* Downloading Sharpii for $kernel $arch...\n"
-        curl -sL "$sharpii" -o sharpii
+        curl -sL "$sharpii$kernel-$arch" -o sharpii
     fi
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
     else
         printf "* Downloading LZX for $kernel $arch...\n"
-        curl -sL $lzx-$kernel-$arch -o lzx
+        curl -sL $lzx$kernel-$arch -o lzx
     fi
     if [[ -e wiiwarepatcher ]]; then
         printf "* wiiwarepatcher appears to exist. Not downloading.\n"
     else
         printf "* Downloading wiiwarepatcher for $kernel $arch...\n"
-        curl -sL $wiiwarepatcher-$kernel-$arch -o wiiwarepatcher
+        curl -sL $wiiwarepatcher$kernel-$arch -o wiiwarepatcher
     fi
     [[ ! -x lzx ]] && chmod +x lzx || true
     [[ ! -x sharpii ]] && chmod +x sharpii || true
