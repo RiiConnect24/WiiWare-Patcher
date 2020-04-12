@@ -48,7 +48,7 @@ deps() {
     [[ -n "$(command -v zypper)" ]] && pm="zypper install"
     [[ -n "$(command -v dnf)" ]] && pm="dnf install"
 
-    dependencies=("curl" "unzip")
+    dependencies=("curl")
 
     for i in "${dependencies[@]}"; do
         [[ -z "$(command -v $i)" ]] && missing+="$i"
@@ -88,3 +88,27 @@ download() {
 
 deps
 download
+
+if [ ! -f *.wad ]
+then
+    printf "There are no wads to patch. Put some in the same directory as the script.\n"; exit
+fi
+
+
+mkdir -p "wiimmfi-wads"
+mkdir -p "backup-wads"
+
+for f in *.wad
+do
+	echo "Processing $f..."
+	echo "Making backup..."
+	cp "$f" "backup-wads"
+	echo "Patching... This might take a second."
+	./bin/sharpii WAD -u "$f" "temp"
+	mv ./temp/00000001.app 00000001.app
+	./bin/wiiwarepatcher
+	mv 00000001.app ./temp/00000001.app
+	rm "$f"
+	./bin/sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
+	rm -r temp
+done

@@ -149,17 +149,15 @@ int main()
     ifstream file("00000001.app", std::ifstream::binary);
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-        cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.bat instead." << endl;
-        system("pause");
+        cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.sh instead." << endl;
         return -1;
     }
 
     // Encode file
-    int ret = system("./lzx -d 00000001.app");
+    int ret = system("./bin/lzx -d 00000001.app");
     if(ret != 0) {
         cerr << "Failed to encode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
-        system("pause");
         return -2;
     }
     cout << "Exit code: " << ret << endl << endl;
@@ -174,7 +172,6 @@ int main()
         cerr << "Error: only " << file.gcount() << " could be read.";
         file.close();
         delete buffer;
-        system("pause");
         return -3;
     }
     file.close();
@@ -187,7 +184,6 @@ int main()
     ofstream ofile("00000001.app", std::ifstream::binary);
     if(!ofile.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-        system("pause");
         return -4;
     }
     ofile.write(buffer, len);
@@ -196,11 +192,10 @@ int main()
     delete buffer;
 
     // Decode File
-    ret = system("./lzx -evb 00000001.app");
+    ret = system("./bin/lzx -evb 00000001.app");
     if(ret != 0) {
         cerr << "Failed to decode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
-        system("pause");
         return -4;
     }
     cout << "Exit code: " << ret << endl;
