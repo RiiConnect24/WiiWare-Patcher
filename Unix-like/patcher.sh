@@ -3,24 +3,9 @@
 lzx="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/lzx-"
 wiiwarepatcher="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/WiiwarePatcher-"
 sharpii="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/Sharpii-Net-Core-1.1.1-"
-error() {
-    sc 0 "Error"
-    printf "An error has occurred.\n\n* Task: $task\n* Command: $BASH_COMMAND\n* Line: $1\n* Exit code: $2\n\n" | fold -s -w $(tput cols)
 
-    case "$task" in
-        "None." ) printf "NOTE:\n\t* Unexpected error. Please contact support with the below provided information quoting the above information.\n\n" | fold -s -w $(tput cols) ;;
-    esac
-
-    printf "$helpmsg\n" | fold -s -w $(tput cols)
-    exit
-}
-
-trap 'error $LINENO $?' ERR
-set -o pipefail
-set -o errtrace
 
 #detect architecture to download the correct Sharpii binary
-task="Detect host architecture and kernel"
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
     kernel="$(uname -s)"
     if [[ -n "$(uname -m | grep 'arm*\|aarch*')" ]]; then
@@ -38,7 +23,6 @@ fi
 printf "\n* Detected kernel: $kernel\n* Detected architecture: $arch\n"
 
 deps() {
-    task="Check dependencies, and automatically install if needed and able to."
     printf "Checking dependencies...\n"
     [[ -n "$(command -v pacman)" ]] && pm="pacman -S"
     [[ -n "$(command -v apt)" ]] && pm="apt install"
@@ -57,7 +41,6 @@ deps() {
 }
 
 download() {
-    task="Download required binaries, and set executable permissions"
     printf "Downloading required binaries...\n\n"
     mkdir -p bin && cd bin
     if [[ -e sharpii ]]; then
@@ -110,3 +93,8 @@ do
 	./bin/sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
 	rm -r temp
 done
+
+printf "Done\n\n"
+printf "The wads are patched. They're in the wiimmfi-wads directory\n"
+printf "The original wads are in backup-wads.\n"
+printf "Thank you for using the Auto WiiWare Patcher.\n"
