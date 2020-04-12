@@ -18,11 +18,7 @@ Windows users:
 Mac/Linux users:
 
 <ul>
-	<li>You need to install Mono if you haven't already. On Mac, install homebrew from https://brew.sh/, and type <pre>brew install mono</pre> in a Terminal window. In Linux, use your package manager (APT for Debian/Ubuntu, etc) and install the appropiate mono package - Google is your friend if you don't understand.</li>
-	<li>Open a command prompt (Terminal on Mac).</li>
-	<li>Type "cd" and put a space.</li>
-	<li>Drag and drop the folder with the patcher (it either says Mac or Linux depending on what you choose) to the command prompt.</li>
-	<li>Type in "sh patch.sh".</li>
+	<li>Simply run the patcher.sh script in the same directory as the wads you wish to patch.</li>
 </ul>
 
 We recommend installing these WADs with <a href="https://github.com/RiiConnect24/Wii-Mod-Lite/releases">WiiMod Lite</a>.
