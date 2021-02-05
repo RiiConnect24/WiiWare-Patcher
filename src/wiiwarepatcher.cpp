@@ -149,10 +149,10 @@ int main()
     ifstream file("00000001.app", std::ifstream::binary);
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
         cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.bat instead." << endl;
         system("pause");
-#elif defined __unix__
+#else
         cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.sh instead." << endl;
 #endif
 
@@ -160,16 +160,16 @@ int main()
     }
 
     // Encode file
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
     int ret = system("lzx.exe -d 00000001.app");
-#elif defined __unix__
+#else
     int ret = system("./lzx -d 00000001.app");
 #endif
 
     if(ret != 0) {
         cerr << "Failed to encode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
         system("pause");
 #endif
         return -2;
@@ -186,7 +186,7 @@ int main()
         cerr << "Error: only " << file.gcount() << " could be read.";
         file.close();
         delete buffer;
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
         system("pause");
 #endif
         return -3;
@@ -201,7 +201,7 @@ int main()
     ofstream ofile("00000001.app", std::ifstream::binary);
     if(!ofile.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
         system("pause");
 #endif
         return -4;
@@ -212,15 +212,15 @@ int main()
     delete buffer;
 
     // Decode File
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
     ret = system("lzx.exe -evb 00000001.app");
-#elif defined __unix__
+#else
     ret = system("./lzx -evb 00000001.app");
 #endif
     if(ret != 0) {
         cerr << "Failed to decode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
-#ifdef (_WIN32) || (WIN32)
+#ifdef _WIN32
         system("pause");
 #endif
         return -4;
