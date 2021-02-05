@@ -1,11 +1,29 @@
 #!/usr/bin/env bash
 
+sharpii="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/sharpii"
+
+#detect architecture to download the correct Sharpii binary
+if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
+    kernel="$(uname -s)"
+    if [[ -n "$(uname -m | grep 'arm*\|aarch*')" ]]; then
+        arch="arm"
+    elif [[ -n "$(uname -m | grep 'x86_64')" ]]; then
+        arch="amd64"
+    else
+        printf "Unable to use your architecture: $(uname -m)\n$helpmsg\n"; exit
+    fi
+else
+    kernel="$(uname -s)" # darwin
+    arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
+fi
+
+
 download() {
     if [[ -e sharpii ]]; then
         printf "* Sharpii appears to exist. Not downloading.\n"
     else
         printf "* Downloading Sharpii for $kernel $arch...\n"
-        curl -sL "$sharpii$kernel-$arch" -o sharpii
+        curl -sL "$sharpii-$kernel-$arch" -o sharpii
     fi
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
@@ -48,7 +66,7 @@ do
     echo "Patching... This might take a second."
     ./sharpii WAD -u "$f" "temp"
     mv ./temp/00000001.app 00000001.app
-    wiiwarepatcher
+    ./wiiwarepatcher
     mv 00000001.app ./temp/00000001.app
     rm "$f"
     ./sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
