@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+
 sharpii="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/sharpii"
+wiiwarepatcher="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/wiiwarepatcher.cpp"
+lzx="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/lzx.c"
 
 #detect architecture to download the correct Sharpii binary
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
@@ -19,6 +22,14 @@ fi
 
 
 download() {
+    command -v curl > /dev/null
+    if [[ $? -eq 1 ]]; then printf "install curl using a package manager to use this script"; exit; fi
+    command -v cc > /dev/null
+    if [[ $? -eq 1 ]]; then printf "you need a C compiler to use this script"; exit; fi
+    command -v c++ > /dev/null
+    if [[ $? -eq 1 ]]; then printf "you need a C++ compiler to use this script"; exit; fi
+
+
     if [[ -e sharpii ]]; then
         printf "* Sharpii appears to exist. Not downloading.\n"
     else
@@ -28,25 +39,24 @@ download() {
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
     else
-        printf "* Downloading LZX"
-        curl -sL https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/lzx.c -o lzx.c
-        printf "* Compiling LZX"
+        printf "* Downloading LZX\n"
+        curl -sL $lzx -o lzx.c
+        printf "* Compiling LZX\n"
         cc lzx.c -o lzx
     fi
     if [[ -e wiiwarepatcher ]]; then
         printf "* wiiwarepatcher appears to exist. Not downloading.\n"
     else
         printf "* Downloading wiiwarepatcher\n"
-        curl -sL https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/wiiwarepatcher.cpp -o wiiwarepatcher.cpp
+        curl -sL $wiiwarepatcher -o wiiwarepatcher.cpp
+	printf "* Compiling wiiwarepatcher\n"
 	c++ wiiwarepatcher.cpp -o wiiwarepatcher
     fi
     [[ ! -x lzx ]] && chmod +x lzx || true
     [[ ! -x sharpii ]] && chmod +x sharpii || true
     [[ ! -x wiiwarepatcher ]] && chmod +x wiiwarepatcher || true
-    cd ..
 }
 
-deps
 download
 
 if [ ! -f *.wad ]
