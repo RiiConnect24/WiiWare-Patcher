@@ -149,7 +149,7 @@ int main()
     ifstream file("00000001.app", std::ifstream::binary);
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
         cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.bat instead." << endl;
         system("pause");
 #elif defined __unix__
@@ -160,7 +160,7 @@ int main()
     }
 
     // Encode file
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
     int ret = system("lzx.exe -d 00000001.app");
 #elif defined __unix__
     int ret = system("./lzx -d 00000001.app");
@@ -169,7 +169,7 @@ int main()
     if(ret != 0) {
         cerr << "Failed to encode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
         system("pause");
 #endif
         return -2;
@@ -186,7 +186,7 @@ int main()
         cerr << "Error: only " << file.gcount() << " could be read.";
         file.close();
         delete buffer;
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
         system("pause");
 #endif
         return -3;
@@ -201,7 +201,7 @@ int main()
     ofstream ofile("00000001.app", std::ifstream::binary);
     if(!ofile.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
         system("pause");
 #endif
         return -4;
@@ -212,7 +212,7 @@ int main()
     delete buffer;
 
     // Decode File
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
     ret = system("lzx.exe -evb 00000001.app");
 #elif defined __unix__
     ret = system("./lzx -evb 00000001.app");
@@ -220,7 +220,7 @@ int main()
     if(ret != 0) {
         cerr << "Failed to decode 00000001.app" << endl;
         cerr << "Are you sure that a program called lzx is in this directory?" << endl;
-#if defined (_WIN32) || defined (WIN32)
+#ifdef (_WIN32) || (WIN32)
         system("pause");
 #endif
         return -4;
