@@ -1,9 +1,9 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
-lzx="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/lzx-"
-wiiwarepatcher="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/WiiwarePatcher-"
-sharpii="https://github.com/KcrPL/KcrPL.github.io/raw/master/Patchers_Auto_Update/WiiWare-Patcher_Linux/Sharpii-Net-Core-1.1.1-"
 
+sharpii="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/sharpii"
+wiiwarepatcher="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/wiiwarepatcher.cpp"
+lzx="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/lzx.c"
 
 #detect architecture to download the correct Sharpii binary
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
@@ -20,54 +20,43 @@ else
     arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
 fi
 
-printf "\n* Detected kernel: $kernel\n* Detected architecture: $arch\n"
-
-deps() {
-    printf "Checking dependencies...\n"
-    [[ -n "$(command -v pacman)" ]] && pm="pacman -S"
-    [[ -n "$(command -v apt)" ]] && pm="apt install"
-    [[ -n "$(command -v emerge)" ]] && pm="emerge -aqv"
-    [[ -n "$(command -v zypper)" ]] && pm="zypper install"
-    [[ -n "$(command -v dnf)" ]] && pm="dnf install"
-
-    dependencies=("curl")
-
-    for i in "${dependencies[@]}"; do
-        [[ -z "$(command -v $i)" ]] && missing+="$i"
-    done; unset i
-    for i in "${missing[@]}"; do
-        [[ -n $pm ]] && printf "\n* $i is missing! Attempting to install using detected package manager (you may be prompted for your password)...\n" | fold -s -w $(tput cols) && $sudo0 $pm $(indep $i) || ex "\n* $i is missing! Please install it using your preferred package manager.\n\n$helpmsg\n"
-    done; unset i
-}
 
 download() {
-    printf "Downloading required binaries...\n\n"
-    mkdir -p bin && cd bin
+    command -v curl > /dev/null
+    if [[ $? -eq 1 ]]; then printf "install curl using a package manager to use this script"; exit; fi
+    command -v cc > /dev/null
+    if [[ $? -eq 1 ]]; then printf "you need a C compiler to use this script"; exit; fi
+    command -v c++ > /dev/null
+    if [[ $? -eq 1 ]]; then printf "you need a C++ compiler to use this script"; exit; fi
+
+
     if [[ -e sharpii ]]; then
         printf "* Sharpii appears to exist. Not downloading.\n"
     else
         printf "* Downloading Sharpii for $kernel $arch...\n"
-        curl -sL "$sharpii$kernel-$arch" -o sharpii
+        curl -sL "$sharpii-$kernel-$arch" -o sharpii
     fi
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
     else
-        printf "* Downloading LZX for $kernel $arch...\n"
-        curl -sL $lzx$kernel-$arch -o lzx
+        printf "* Downloading LZX\n"
+        curl -sL $lzx -o lzx.c
+        printf "* Compiling LZX\n"
+        cc lzx.c -o lzx
     fi
     if [[ -e wiiwarepatcher ]]; then
         printf "* wiiwarepatcher appears to exist. Not downloading.\n"
     else
-        printf "* Downloading wiiwarepatcher for $kernel $arch...\n"
-        curl -sL $wiiwarepatcher$kernel-$arch -o wiiwarepatcher
+        printf "* Downloading wiiwarepatcher\n"
+        curl -sL $wiiwarepatcher -o wiiwarepatcher.cpp
+	printf "* Compiling wiiwarepatcher\n"
+	c++ wiiwarepatcher.cpp -o wiiwarepatcher
     fi
     [[ ! -x lzx ]] && chmod +x lzx || true
     [[ ! -x sharpii ]] && chmod +x sharpii || true
     [[ ! -x wiiwarepatcher ]] && chmod +x wiiwarepatcher || true
-    cd ..
 }
 
-deps
 download
 
 if [ ! -f *.wad ]
@@ -81,17 +70,17 @@ mkdir -p "backup-wads"
 
 for f in *.wad
 do
-	echo "Processing $f..."
-	echo "Making backup..."
-	cp "$f" "backup-wads"
-	echo "Patching... This might take a second."
-	./bin/sharpii WAD -u "$f" "temp"
-	mv ./temp/00000001.app 00000001.app
-	./bin/wiiwarepatcher
-	mv 00000001.app ./temp/00000001.app
-	rm "$f"
-	./bin/sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
-	rm -r temp
+    echo "Processing $f..."
+    echo "Making backup..."
+    cp "$f" "backup-wads"
+    echo "Patching... This might take a second."
+    ./sharpii WAD -u "$f" "temp"
+    mv ./temp/00000001.app 00000001.app
+    ./wiiwarepatcher
+    mv 00000001.app ./temp/00000001.app
+    rm "$f"
+    ./sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
+    rm -r temp
 done
 
 printf "Done\n\n"
