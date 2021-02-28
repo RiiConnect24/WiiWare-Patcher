@@ -79,7 +79,7 @@ do
     ./wiiwarepatcher
     mv 00000001.app ./temp/00000001.app
     rm "$f"
-    ./sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
+    ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
     rm -r temp
 done
 
