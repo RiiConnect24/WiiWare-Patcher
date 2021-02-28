@@ -5,7 +5,7 @@ sharpii="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/sha
 wiiwarepatcher="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/wiiwarepatcher"
 lzx="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/lzx"
 
-#detect architecture to download the correct Sharpii binary
+#detect architecture to download the correct binary for sharpii, lzx and wiiwarepatcher
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
     kernel="$(uname -s)"
     if [[ -n "$(uname -m | grep 'arm*\|aarch*')" ]]; then
@@ -22,7 +22,6 @@ else
     # I'm too lazy to change the code further down when it makes no difference
 fi
 
-
 download() {
     command -v curl > /dev/null
     if [[ $? -eq 1 ]]; then printf "install curl using a package manager to use this script"; exit; fi
@@ -35,8 +34,9 @@ download() {
     fi
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
-        curl -sL "$lzx-$kernel-$arch" -o lzx
     else
+        printf "* Downloading LZX\n"
+        curl -sL "$lzx-$kernel-$arch" -o lzx
     fi
     if [[ -e wiiwarepatcher ]]; then
         printf "* wiiwarepatcher appears to exist. Not downloading.\n"
@@ -71,7 +71,7 @@ do
     ./wiiwarepatcher
     mv 00000001.app ./temp/00000001.app
     rm "$f"
-    ./sharpii WAD -p "temp" "./wiimmfi-wads/${f}-Wiimmfi"
+    ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
     rm -r temp
 done
 
