@@ -2,8 +2,8 @@
 
 
 sharpii="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/sharpii"
-wiiwarepatcher="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/wiiwarepatcher.cpp"
-lzx="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/src/lzx.c"
+wiiwarepatcher="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/wiiwarepatcher"
+lzx="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/lzx"
 
 #detect architecture to download the correct Sharpii binary
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
@@ -18,17 +18,14 @@ if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
 else
     kernel="$(uname -s)" # darwin
     arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
+    # macOS uses mach-o binaries, so the same one can be used for both arm, and amd64 (written Feburary 2020)
+    # I'm too lazy to change the code further down when it makes no difference
 fi
 
 
 download() {
     command -v curl > /dev/null
     if [[ $? -eq 1 ]]; then printf "install curl using a package manager to use this script"; exit; fi
-    command -v cc > /dev/null
-    if [[ $? -eq 1 ]]; then printf "you need a C compiler to use this script"; exit; fi
-    command -v c++ > /dev/null
-    if [[ $? -eq 1 ]]; then printf "you need a C++ compiler to use this script"; exit; fi
-
 
     if [[ -e sharpii ]]; then
         printf "* Sharpii appears to exist. Not downloading.\n"
@@ -38,19 +35,14 @@ download() {
     fi
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
+        curl -sL "$lzx-$kernel-$arch" -o lzx
     else
-        printf "* Downloading LZX\n"
-        curl -sL $lzx -o lzx.c
-        printf "* Compiling LZX\n"
-        cc lzx.c -o lzx
     fi
     if [[ -e wiiwarepatcher ]]; then
         printf "* wiiwarepatcher appears to exist. Not downloading.\n"
     else
         printf "* Downloading wiiwarepatcher\n"
-        curl -sL $wiiwarepatcher -o wiiwarepatcher.cpp
-	printf "* Compiling wiiwarepatcher\n"
-	c++ wiiwarepatcher.cpp -o wiiwarepatcher
+        curl -sL $wiiwarepatcher-$kernel-$arch -o wiiwarepatcher
     fi
     [[ ! -x lzx ]] && chmod +x lzx || true
     [[ ! -x sharpii ]] && chmod +x sharpii || true
