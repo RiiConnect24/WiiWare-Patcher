@@ -366,7 +366,7 @@ int main(int argc, char * argv[])
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
 #ifdef _WIN32
-        cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.bat instead." << endl;
+        cerr << "Are you trying to run auto-wiiware-patcher? Please run WiiWarePatcher.bat instead." << endl;
         system("pause");
 #else
         cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.sh instead." << endl;
