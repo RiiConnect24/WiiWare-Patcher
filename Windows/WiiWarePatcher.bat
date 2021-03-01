@@ -295,6 +295,32 @@ set /a errorwinxp=0
 timeout -0 /nobreak >NUL || set /a errorwinxp=1
 
 goto main_fade_out
+:no_internet_connection
+cls
+echo %header%                                                                
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.                 
+echo.
+echo ---------------------------------------------------------------------------------------------------------------------------
+echo    /---\   ERROR.
+echo   /     \  There is no internet connection.
+echo  /   ^^!   \ 
+echo  --------- Could not connect to remote server.
+echo            Check your internet connection or check if your firewall isn't blocking curl.
+echo.
+echo       Press any key to return to main menu.
+echo ---------------------------------------------------------------------------------------------------------------------------
+pause>NUL
+goto begin_main
 :server_dead
 cls
 echo %header%
