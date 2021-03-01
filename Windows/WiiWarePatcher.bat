@@ -25,7 +25,8 @@ set version=2.2.0
 :: ===========================================================================
 
 @echo off
-title Wiimmfi Patcher for WAD's v%version% Created by @KcrPL, @Larsenv, @PokeAcer
+set title=Wiimmfi Patcher for WAD's v%version% Created by @KcrPL, @Larsenv, @PokeAcer
+title %title%
 cls
 
 set /a patherror=0
