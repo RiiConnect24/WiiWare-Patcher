@@ -190,7 +190,7 @@ int do_new_wiimmfi(char *addr, int len) {
                             *(int *)(MASTERopcodeChainOffset + 0x00) = htonl(0x38000004 | (rX << 21));
                             *(int *)(MASTERopcodeChainOffset + 0x04) = htonl(0x7c00042c | (rY << 21) | (3 << 16) | (rX << 11));
                             *(int *)(MASTERopcodeChainOffset + 0x14) = htonl(0x9000000c | (rY << 21) | (1 << 16));
-                            *(int *)(MASTERopcodeChainOffset + 0x18) = htonl(0x80000011 | (rY << 21) | (1 << 16));
+                            *(int *)(MASTERopcodeChainOffset + 0x18) = htonl(0x88000011 | (rY << 21) | (1 << 16));
                             *(int *)(MASTERopcodeChainOffset + 0x28) = htonl(0x28000080 | (rY << 16));
                             *(int *)(MASTERopcodeChainOffset + 0x38) = htonl(0x60000000);
                             *(int *)(MASTERopcodeChainOffset + 0x44) = htonl(0x41810014);
