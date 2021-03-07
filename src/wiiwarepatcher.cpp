@@ -74,13 +74,13 @@ int do_new_wiimmfi(char *addr, int len) {
 
         // Patch the User-Agent so Wiimmfi knows this game has been patched. 
         // Note: The letter and the first digit in this User-Agent specifies which patcher patched the WiiWare game.
-        // Please leave that as is ("J-1") and do not change this without talking to Leseratte beforehand.
+        // Please leave that as is ("J-2") and do not change this without talking to Leseratte beforehand.
         if (memcmp(cur, "User-Agent\x00\x00RVL SDK/", 20) == 0) {
 
             if (hasGT2Error) 
-                memcpy(cur + 12, "J-1-1\x00", 6); 
+                memcpy(cur + 12, "J-2-1\x00", 6); 
             else
-                memcpy(cur + 12, "J-1-0\x00", 6); 
+                memcpy(cur + 12, "J-2-0\x00", 6); 
             
         }
 
@@ -169,40 +169,52 @@ int do_new_wiimmfi(char *addr, int len) {
                             GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x10)) == 0x12 &&
                             GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x2c)) == 0x04 &&
                             
-                            (
-                            
-                            (GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x3c)) == 0x12 && 
-                            GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x44)) == 0x0c) ||
-
-                            (GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x3c)) == 0x0c && 
-                            GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x44)) == 0x12)
-
-                            ) &&
-
                             GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x48)) == 0x18 &&
                             GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x50)) == 0x00 &&
                             GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x54)) == 0x18
                         )
                         {
-                            int rY = GetComparisonTargetReg((unsigned int *)MASTERopcodeChainOffset); 
-                            int rX = GetLoadTargetReg((unsigned int *)MASTERopcodeChainOffset);       
 
-                            *(int *)(MASTERopcodeChainOffset + 0x00) = htonl(0x38000004 | (rX << 21));
-                            *(int *)(MASTERopcodeChainOffset + 0x04) = htonl(0x7c00042c | (rY << 21) | (3 << 16) | (rX << 11));
-                            *(int *)(MASTERopcodeChainOffset + 0x14) = htonl(0x9000000c | (rY << 21) | (1 << 16));
-                            *(int *)(MASTERopcodeChainOffset + 0x18) = htonl(0x88000011 | (rY << 21) | (1 << 16));
-                            *(int *)(MASTERopcodeChainOffset + 0x28) = htonl(0x28000080 | (rY << 16));
-                            *(int *)(MASTERopcodeChainOffset + 0x38) = htonl(0x60000000);
-                            *(int *)(MASTERopcodeChainOffset + 0x44) = htonl(0x41810014);
-                            successful_patch_master++;
+
+                            int master_patch_version = 0; 
+
+                            // Check which version we have:
+                            if ((GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x3c)) == 0x12 && 
+                            GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x44)) == 0x0c) ) {
+                                master_patch_version = 1; 
+                            }
+                            else if ((GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x3c)) == 0x0c && 
+                            GetImmediateDataVal((unsigned int *)(MASTERopcodeChainOffset + 0x44)) == 0x12) ) {
+                                master_patch_version = 2; 
+                            }
+
+
+                            if (master_patch_version == 2) {
+                                // Different opcode order ...
+                                *(int *)(MASTERopcodeChainOffset + 0x3c) = *(int *)(MASTERopcodeChainOffset + 0x44);
+                            }
+
+                            if (master_patch_version != 0) {
+                                int rY = GetComparisonTargetReg((unsigned int *)MASTERopcodeChainOffset); 
+                                int rX = GetLoadTargetReg((unsigned int *)MASTERopcodeChainOffset); 
+
+                                *(int *)(MASTERopcodeChainOffset + 0x00) = htonl(0x38000004 | (rX << 21));
+                                *(int *)(MASTERopcodeChainOffset + 0x04) = htonl(0x7c00042c | (rY << 21) | (3 << 16) | (rX << 11));
+                                *(int *)(MASTERopcodeChainOffset + 0x14) = htonl(0x9000000c | (rY << 21) | (1 << 16));
+                                *(int *)(MASTERopcodeChainOffset + 0x18) = htonl(0x88000011 | (rY << 21) | (1 << 16)); 
+                                *(int *)(MASTERopcodeChainOffset + 0x28) = htonl(0x28000080 | (rY << 16));
+                                *(int *)(MASTERopcodeChainOffset + 0x38) = htonl(0x60000000);
+                                *(int *)(MASTERopcodeChainOffset + 0x44) = htonl(0x41810014);
+                                successful_patch_master++;
+
+                            }
 
                         }
                     }
             }
         }
 
-
-    } while (++cur < end); 
+    } while (++cur < end);
 
     if (hasGT2Error) {
         if (successful_patch_p2p == 0) {
