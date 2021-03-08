@@ -14,11 +14,11 @@ set /a cor=0
 set /a patchingnumber=1
 set /a temperrorlev=0
 ::
-set last_build=2021/03/01
-set at=23:28
+set last_build=2021/03/08
+set at=10:21
 :: ===========================================================================
 :: WiiWare Patcher for Windows
-set version=2.2.0
+set version=2.2.1
 :: AUTHORS: KcrPL,
 :: ***************************************************************************
 :: Copyright (c) 2021 RiiConnect24, and it's (Lead) Developers
@@ -45,6 +45,7 @@ set TempStorage=%appdata%\WiiWare-Patcher\internet\temp
 set header=Wiimmfi WiiWarePatcher - (C) KcrPL v%version% (Updated on %last_build% at %at%)
 set header_loop=Wiimmfi WiiWarePatcher - KcrPL v%version% Updated on %last_build% at %at%
 set aio_assisted=0
+set useragent_curl=--user-agent "WiiWare Patcher v%version%"
 
 if exist temp.bat del temp.bat /q
 
@@ -237,20 +238,20 @@ if not exist "%TempStorage%" md "%TempStorage%"
 
 		title %string78% :-         :
 
-call curl -f -L -s --user-agent "WiiWare Patcher v%version%" --insecure "http://www.msftncsi.com/ncsi.txt">NUL
+call curl -f -L -s --insecure "http://www.msftncsi.com/ncsi.txt">NUL
 	if "%errorlevel%"=="6" title %title%& goto no_internet_connection
 
 		title %string78% :--        :
 
-For /F "Delims=" %%A In ('call curl -f -L -s --user-agent "WiiWare Patcher v%version%" --insecure "https://patcher.rc24.xyz/connection_test.txt"') do set "connection_test=%%A"
+For /F "Delims=" %%A In ('call curl -f -L -s %useragent_curl% --insecure "https://patcher.rc24.xyz/connection_test.txt"') do set "connection_test=%%A"
 	set /a temperrorlev=%errorlevel%
 	
 	if not "%connection_test%"=="OK" title %title%& goto server_dead
 	
 		title %string78% :---       :
 
-if %Update_Activate%==1 if %offlinestorage%==0 call curl -f -L -s -S --user-agent "WiiWare Patcher v%version%" --insecure "%FilesHostedOn%/UPDATE/whatsnew.txt" --output "%TempStorage%\whatsnew.txt"
-if %Update_Activate%==1 if %offlinestorage%==0 call curl -f -L -s -S --user-agent "WiiWare Patcher v%version%" --insecure "%FilesHostedOn%/UPDATE/version.txt" --output "%TempStorage%\version.txt"
+if %Update_Activate%==1 if %offlinestorage%==0 call curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/UPDATE/whatsnew.txt" --output "%TempStorage%\whatsnew.txt"
+if %Update_Activate%==1 if %offlinestorage%==0 call curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/UPDATE/version.txt" --output "%TempStorage%\version.txt"
 	set /a temperrorlev=%errorlevel%
 
 		title %string78% :-----     :
@@ -282,8 +283,8 @@ set /a maintenance_block=0
 
 		title %string78% :--------- :
 
-For /F "Delims=" %%A In ('call curl -f -L -s -S --user-agent "WiiWare Patcher v%version%" --insecure "%FilesHostedOn%/UPDATE/maintenance_info.txt"') do set "maintenance_info=%%A"
-For /F "Delims=" %%A In ('call curl -f -L -s -S --user-agent "WiiWare Patcher v%version%" --insecure "%FilesHostedOn%/UPDATE/maintenance_block.txt"') do set "maintenance_block=%%A"
+For /F "Delims=" %%A In ('call curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/UPDATE/maintenance_info.txt"') do set "maintenance_info=%%A"
+For /F "Delims=" %%A In ('call curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/UPDATE/maintenance_block.txt"') do set "maintenance_block=%%A"
 
 	title %title%
 
@@ -484,7 +485,7 @@ echo                   `.              yddyo++:    `-/oymNNNNNdy+:`
 echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 :update_1
-curl -f -L -s -S --insecure "%FilesHostedOn_update_assistant%/UPDATE/update_assistant.bat" --output "update_assistant.bat"
+curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn_update_assistant%/UPDATE/update_assistant.bat" --output "update_assistant.bat"
 	set temperrorlev=%errorlevel%
 	if not %temperrorlev%==0 goto error_updating
 start update_assistant.bat -WiiWare_Patcher
@@ -557,23 +558,23 @@ echo Downloading files... give me a second.
 
 if exist WiiWarePatcher rmdir /s /q WiiWarePatcher
 md WiiWarePatcher
-curl -f -L -s -S --insecure "%FilesHostedOn%/WiiWarePatcher/libWiiSharp.dll" --output "WiiWarePatcher/libWiiSharp.dll"
+curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/libWiiSharp.dll" --output "WiiWarePatcher/libWiiSharp.dll"
 set /a temperrorlev=%errorlevel%
 if not %temperrorlev%==0 goto files_download_error
 echo 20%%
-curl -f -L -s -S --insecure "%FilesHostedOn%/WiiWarePatcher/lzx.exe" --output "WiiWarePatcher/lzx.exe"
+curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/lzx.exe" --output "WiiWarePatcher/lzx.exe"
 set /a temperrorlev=%errorlevel%
 if not %temperrorlev%==0 goto files_download_error
 echo 40%%
-curl -f -L -s -S --insecure "%FilesHostedOn%/WiiWarePatcher/Sharpii.exe" --output "WiiWarePatcher/Sharpii.exe"
+curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/Sharpii.exe" --output "WiiWarePatcher/Sharpii.exe"
 set /a temperrorlev=%errorlevel%
 if not %temperrorlev%==0 goto files_download_error
 echo 60%%
-curl -f -L -s -S --insecure "%FilesHostedOn%/WiiWarePatcher/WadInstaller.dll" --output "WiiWarePatcher/WadInstaller.dll"
+curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/WadInstaller.dll" --output "WiiWarePatcher/WadInstaller.dll"
 set /a temperrorlev=%errorlevel%
 if not %temperrorlev%==0 goto files_download_error
 echo 80%%
-curl -f -L -s -S --insecure "%FilesHostedOn%/WiiWarePatcher/WiiWarePatcher.exe" --output "WiiWarePatcher/WiiWarePatcher.exe"
+curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/WiiWarePatcher.exe" --output "WiiWarePatcher/WiiWarePatcher.exe"
 set /a temperrorlev=%errorlevel%
 if not %temperrorlev%==0 goto files_download_error
 

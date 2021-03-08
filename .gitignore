@@ -1,0 +1,7 @@
+# Patchers output
+wiimmfi-wads
+backup-wads
+src/WiiWarePatcher.exe
+
+# Don't upload .WAD files
+*.WAD
