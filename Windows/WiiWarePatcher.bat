@@ -15,10 +15,10 @@ set /a patchingnumber=1
 set /a temperrorlev=0
 ::
 set last_build=2021/03/08
-set at=10:21
+set at=11:19
 :: ===========================================================================
 :: WiiWare Patcher for Windows
-set version=2.2.1
+set version=2.2.2
 :: AUTHORS: KcrPL,
 :: ***************************************************************************
 :: Copyright (c) 2021 RiiConnect24, and it's (Lead) Developers
@@ -574,10 +574,16 @@ curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/Wad
 set /a temperrorlev=%errorlevel%
 if not %temperrorlev%==0 goto files_download_error
 echo 80%%
-curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/WiiWarePatcher.exe" --output "WiiWarePatcher/WiiWarePatcher.exe"
-set /a temperrorlev=%errorlevel%
-if not %temperrorlev%==0 goto files_download_error
-
+	if %processor_architecture%==AMD64 (
+		curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/WiiWarePatcher_64bit.exe" --output "WiiWarePatcher/WiiWarePatcher.exe"
+		set /a temperrorlev=%errorlevel%
+		if not %temperrorlev%==0 goto files_download_error
+		) else (
+			curl -f -L -s -S %useragent_curl% --insecure "%FilesHostedOn%/WiiWarePatcher/WiiWarePatcher_32bit.exe" --output "WiiWarePatcher/WiiWarePatcher.exe"
+			set /a temperrorlev=%errorlevel%
+			if not %temperrorlev%==0 goto files_download_error
+			)
+		
 goto choose_patch_type
 :files_download_error
 cls
