@@ -724,7 +724,7 @@ echo                   `.              yddyo++:    `-/oymNNNNNdy+:`
 echo                                   -odhhhhyddmmmmmNNmhs/:`
 echo                                     :syhdyyyyso+/-`
 
-sharpii NUSD -id %regiontype_speak% -v 512 -all >NUL
+WiiWarePatcher\Sharpii.exe NUSD -id %regiontype_speak% -v 512 -all >NUL
 set /a temperrorlev=%errorlevel%
 set modul=Sharpii.exe
 if not %temperrorlev%==0 goto error_patching
