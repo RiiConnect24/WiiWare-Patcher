@@ -1,7 +1,7 @@
-# Automatic WiiWare Patcher
-[![License](https://img.shields.io/github/license/riiconnect24/auto-wiiware-patcher.svg?style=flat-square)](http://www.gnu.org/licenses/agpl-3.0)
+# WiiWare Patcher
+[![License](https://img.shields.io/github/license/riiconnect24/wiiware-patcher.svg?style=flat-square)](http://www.gnu.org/licenses/agpl-3.0)
 ![Production List](https://img.shields.io/discord/206934458954153984.svg?style=flat-square)
-![Version Badge](https://img.shields.io/github/release/riiconnect24/auto-wiiware-patcher.svg?style=flat-square)
+![Version Badge](https://img.shields.io/github/release/riiconnect24/wiiware-patcher.svg?style=flat-square)
 
 This patcher will make WiiWare patching easy to do to use Wiimmfi.
 
