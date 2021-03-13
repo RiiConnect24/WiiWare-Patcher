@@ -1,7 +1,5 @@
 @echo off
-REM --- Important for file counter to work ---
-setlocal ENABLEDELAYEDEXPANSION
-rem ---
+
 cd /d "%~dp0"
 set currentPath=%cd%
 goto begin
@@ -59,6 +57,12 @@ set /a errorwinxp=0
 set /a updateserver=1
 goto choose_patch_type
 
+rem This is called to remove exclamation points from file names.
+rem Exclamation points break the script when ENABLEDELAYEDEXPANSION is set for the file counter.
+:RemoveExclamationPoints
+set "filename=%~n1"
+ren %1 "%filename:!=%%~x1"
+goto :EOF
 
 :begin_main
 if %aio_assisted%==1 exit
@@ -790,11 +794,19 @@ if not exist temp md temp
 if not exist wiimmfi-wads md wiimmfi-wads
 if not exist backup-wads md backup-wads
 
+rem Removes Exclamation Points for ENABLEDELAYEDEXPANSION
+for %%r in ("*.wad") do call :RemoveExclamationPoints "%%r"
+
+rem --- Important for file counter to work ---
+setlocal ENABLEDELAYEDEXPANSION
+rem ---
+
 for %%f in ("*.wad") do (
 cls
 echo %header_loop%
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo.
+echo %%~nf
 echo Patching file [!patching_file!] out of [%file_counter%]
 echo File name: %%~nf
 echo.
