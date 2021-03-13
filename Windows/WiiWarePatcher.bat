@@ -806,7 +806,6 @@ cls
 echo %header_loop%
 echo ------------------------------------------------------------------------------------------------------------------------------
 echo.
-echo %%~nf
 echo Patching file [!patching_file!] out of [%file_counter%]
 echo File name: %%~nf
 echo.
