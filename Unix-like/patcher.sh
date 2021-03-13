@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 
-sharpii="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/sharpii"
-wiiwarepatcher="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/wiiwarepatcher"
-lzx="https://github.com/RiiConnect24/auto-wiiware-patcher/raw/master/bin/lzx"
+sharpii="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/sharpii"
+wiiwarepatcher="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/wiiwarepatcher"
+lzx="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/lzx"
 
 #detect architecture to download the correct binary for sharpii, lzx and wiiwarepatcher
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
