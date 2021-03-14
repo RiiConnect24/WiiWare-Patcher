@@ -12,6 +12,8 @@ if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
         arch="arm"
     elif [[ -n "$(uname -m | grep 'x86_64')" ]]; then
         arch="amd64"
+    elif [[ -n "$(uname -m | grep 'i386')" ]]; then
+        arch="i386"
     else
         printf "Unable to use your architecture: $(uname -m)\n$helpmsg\n"; exit
     fi
