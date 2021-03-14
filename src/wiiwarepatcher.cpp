@@ -74,13 +74,13 @@ int do_new_wiimmfi(char *addr, int len) {
 
         // Patch the User-Agent so Wiimmfi knows this game has been patched. 
         // Note: The letter and the first digit in this User-Agent specifies which patcher patched the WiiWare game.
-        // Please leave that as is ("J-2") and do not change this without talking to Leseratte beforehand.
+        // Please leave that as is ("J-3") and do not change this without talking to Leseratte beforehand.
         if (memcmp(cur, "User-Agent\x00\x00RVL SDK/", 20) == 0) {
 
             if (hasGT2Error) 
-                memcpy(cur + 12, "J-2-1\x00", 6); 
+                memcpy(cur + 12, "J-3-1\x00", 6); 
             else
-                memcpy(cur + 12, "J-2-0\x00", 6); 
+                memcpy(cur + 12, "J-3-0\x00", 6); 
             
         }
 
@@ -148,6 +148,8 @@ int do_new_wiimmfi(char *addr, int len) {
                                 successful_patch_p2p++;
                             }
                             if (found_opcode_chain_P2P_v2) {
+
+                                loadedDataReg = 12;
                                 
                                 *(int *)(cur + 0x14) = htonl(0x88010011 | (comparisonDataReg << 21)); 
                                 *(int *)(cur + 0x18) = htonl(0x28000080 | (comparisonDataReg << 16)); 
