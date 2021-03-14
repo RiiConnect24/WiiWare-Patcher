@@ -5,6 +5,9 @@ sharpii="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/sharpii"
 wiiwarepatcher="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/wiiwarepatcher"
 lzx="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/lzx"
 
+#Needed for Sharpii on i386 systems
+libwiisharp="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/libwiisharp.dll"
+
 #detect architecture to download the correct binary for sharpii, lzx and wiiwarepatcher
 if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
     kernel="$(uname -s)"
@@ -28,11 +31,15 @@ download() {
     command -v curl > /dev/null
     if [[ $? -eq 1 ]]; then printf "install curl using a package manager to use this script"; exit; fi
 
-    if [[ -e sharpii ]]; then
+    if [[ -e sharpii || -e sharpii/sharpii ]]; then
         printf "* Sharpii appears to exist. Not downloading.\n"
     else
         printf "* Downloading Sharpii for $kernel $arch...\n"
-        curl -sL "$sharpii-$kernel-$arch" -o sharpii
+        if [[ $arch -ne "i386" ]]; then curl -sL "$sharpii-$kernel-$arch" -o sharpii; fi
+
+	if [[ $arch -eq "i386" ]]; then mkdir sharpii; fi
+        if [[ $arch -eq "i386" ]]; then curl -sL "$sharpii-$kernel-$arch" -o sharpii/sharpii; fi
+	if [[ $arch -eq "i386" ]]; then curl -sL "$libwiisharp" -o sharpii\\libwiisharp.dll; fi
     fi
     if [[ -e lzx ]]; then
         printf "* LZX appears to exist. Not downloading.\n"
@@ -47,7 +54,8 @@ download() {
         curl -sL $wiiwarepatcher-$kernel-$arch -o wiiwarepatcher
     fi
     [[ ! -x lzx ]] && chmod +x lzx || true
-    [[ ! -x sharpii ]] && chmod +x sharpii || true
+    if [[ $arch -ne "i386" ]]; then [[ ! -x sharpii ]] && chmod +x sharpii || true; fi
+    if [[ $arch -eq "i386" ]]; then [[ ! -x sharpii/sharpii ]] && chmod +x sharpii/sharpii || true; fi
     [[ ! -x wiiwarepatcher ]] && chmod +x wiiwarepatcher || true
 }
 
@@ -68,12 +76,14 @@ do
     echo "Making backup..."
     cp "$f" "backup-wads"
     echo "Patching... This might take a second."
-    ./sharpii WAD -u "$f" "temp"
+    if [[$arch -nq "i386"]]; then ./sharpii WAD -u "$f" "temp"
+    if [[$arch -eq "i386"]]; then sharpii/sharpii WAD -u "$f" "temp"
     mv ./temp/00000001.app 00000001.app
     ./wiiwarepatcher
     mv 00000001.app ./temp/00000001.app
     rm "$f"
-    ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
+    if [[$arch -ne "i386"]]; then ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
+    if [[$arch -eq "i386"]]; then sharpii/sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
     rm -r temp
 done
 
