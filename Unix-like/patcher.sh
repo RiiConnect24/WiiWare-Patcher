@@ -61,7 +61,7 @@ download() {
 
 download
 
-if [ ! -f *.wad ]
+if ! -f *.wad 
 then
     printf "There are no wads to patch. Put some in the same directory as the script.\n"; exit
 fi
