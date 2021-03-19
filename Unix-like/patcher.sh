@@ -61,29 +61,28 @@ download() {
 
 download
 
-if [ ! -f *.wad ]
+if ! ls *.wad >/dev/null 2>&1
 then
-    printf "There are no wads to patch. Put some in the same directory as the script.\n\n"
+    printf "There are no wads to patch. Put some in the same directory as the script.\n"; exit
 fi
 
 
 mkdir -p "wiimmfi-wads"
 mkdir -p "backup-wads"
 
-for f in *.wad
-do
+for f in *.wad; do
     echo "Processing $f..."
     echo "Making backup..."
     cp "$f" "backup-wads"
     echo "Patching... This might take a second."
-    if [[$arch -nq "i386"]]; then ./sharpii WAD -u "$f" "temp"
-    if [[$arch -eq "i386"]]; then sharpii/sharpii WAD -u "$f" "temp"
+    if [[ $arch -ne "i386" ]]; then ./sharpii WAD -u "$f" "temp"; fi
+    if [[ $arch -eq "i386" ]]; then sharpii/sharpii WAD -u "$f" "temp"; fi
     mv ./temp/00000001.app 00000001.app
     ./wiiwarepatcher
     mv 00000001.app ./temp/00000001.app
     rm "$f"
-    if [[$arch -ne "i386"]]; then ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
-    if [[$arch -eq "i386"]]; then sharpii/sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"
+    if [[ $arch -ne "i386" ]]; then ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"; fi
+    if [[ $arch -eq "i386" ]]; then sharpii/sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"; fi
     rm -r temp
 done
 
