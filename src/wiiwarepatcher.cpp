@@ -380,10 +380,11 @@ int main(int argc, char * argv[])
     if(!file.is_open()) {
         cerr << "Failed to open 00000001.app" << endl;
 #ifdef _WIN32
-        cerr << "Are you trying to run auto-wiiware-patcher? Please run WiiWarePatcher.bat instead." << endl;
-        system("pause");
+        cerr << "\nAre you trying to run the WiiWare-Patcher? Please run WiiWarePatcher.bat instead.\n[or RiiConnect24Patcher.bat if you're using that]." << endl;
+		cerr << "\nPress any key to close the program.\n";
+		system("if exist WiiWarePatcher.bat (start WiiWarePatcher.bat&exit) else ( pause>NUL)");
 #else
-        cerr << "Are you trying to run auto-wiiware-patcher? Please run patcher.sh instead." << endl;
+        cerr << "Are you trying to run WiiWare-Patcher? Please run patcher.sh instead." << endl;
 #endif
 
         return -1;
