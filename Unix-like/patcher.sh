@@ -1,69 +1,89 @@
 #!/usr/bin/env bash
 
 
-sharpii="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/sharpii"
+sharpii="https://noahpistilli.github.io/RC24_Patcher/Sharpii"
 wiiwarepatcher="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/wiiwarepatcher"
 lzx="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/lzx"
 
-#Needed for Sharpii on i386 systems
-libwiisharp="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/libwiisharp.dll"
+#Needed for Sharpii on i386 systems # << What
+#libwiisharp="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/libwiisharp.dll"
 
 #detect architecture to download the correct binary for sharpii, lzx and wiiwarepatcher
-if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
-    kernel="$(uname -s)"
-    if [[ -n "$(uname -m | grep 'arm*\|aarch*')" ]]; then
-        arch="arm"
-    elif [[ -n "$(uname -m | grep 'x86_64')" ]]; then
-        arch="amd64"
-    elif [[ -n "$(uname -m | grep 'i386')" ]]; then
-        arch="i386"
-    else
-        printf "Unable to use your architecture: $(uname -m)\n$helpmsg\n"; exit
-    fi
-else
-    kernel="$(uname -s)" # darwin
-    arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
-    # macOS uses mach-o binaries, so the same one can be used for both arm, and amd64 (written Feburary 2020)
-    # I'm too lazy to change the code further down when it makes no difference
-fi
+# if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
+#     kernel="$(uname -s)"
+#     if [[ -n "$(uname -m | grep 'arm*\|aarch*')" ]]; then
+#         arch="arm"
+#     elif [[ -n "$(uname -m | grep 'x86_64')" ]]; then
+#         arch="amd64"
+#     elif [[ -n "$(uname -m | grep 'i386')" ]]; then
+#         arch="i386"
+#     else
+#         printf "Unable to use your architecture: $(uname -m)\n$helpmsg\n"; exit
+#     fi
+# else
+#     kernel="$(uname -s)" # darwin
+#     arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
+#     # macOS uses mach-o binaries, so the same one can be used for both arm, and amd64 (written Feburary 2020)
+#     # I'm too lazy to change the code further down when it makes no difference
+# fi
 
-download() {
-    command -v curl > /dev/null
-    if [[ $? -eq 1 ]]; then printf "install curl using a package manager to use this script"; exit; fi
+kernel="$(uname -s)"
+case $(uname -m) in
+	arm*|aarch*)
+		arch="arm";;
+	x86_64)
+		arch="amd64";;
+	i386)
+		arch="i386";;
 
-    if [[ -e sharpii || -e sharpii/sharpii ]]; then
-        printf "* Sharpii appears to exist. Not downloading.\n"
-    else
-        printf "* Downloading Sharpii for $kernel $arch...\n"
-        if [[ $arch -ne "i386" ]]; then curl -sL "$sharpii-$kernel-$arch" -o sharpii; fi
+	*)
+		printf "Probably unrecognized architecture \"$(uname -m)\".\n"
+		exit;;
+esac
 
-	if [[ $arch -eq "i386" ]]; then mkdir sharpii; fi
-        if [[ $arch -eq "i386" ]]; then curl -sL "$sharpii-$kernel-$arch" -o sharpii/sharpii; fi
-	if [[ $arch -eq "i386" ]]; then curl -sL "$libwiisharp" -o sharpii\\libwiisharp.dll; fi
-    fi
-    if [[ -e lzx ]]; then
-        printf "* LZX appears to exist. Not downloading.\n"
-    else
-        printf "* Downloading LZX\n"
-        curl -sL "$lzx-$kernel-$arch" -o lzx
-    fi
-    if [[ -e wiiwarepatcher ]]; then
-        printf "* wiiwarepatcher appears to exist. Not downloading.\n"
-    else
-        printf "* Downloading wiiwarepatcher\n"
-        curl -sL $wiiwarepatcher-$kernel-$arch -o wiiwarepatcher
-    fi
-    [[ ! -x lzx ]] && chmod +x lzx || true
-    if [[ $arch -ne "i386" ]]; then [[ ! -x sharpii ]] && chmod +x sharpii || true; fi
-    if [[ $arch -eq "i386" ]]; then [[ ! -x sharpii/sharpii ]] && chmod +x sharpii/sharpii || true; fi
-    [[ ! -x wiiwarepatcher ]] && chmod +x wiiwarepatcher || true
+case $(uname -m),$(uname) in
+ 	x86_64,Darwin|arm64,Darwin)
+ 		sys="macOS-x64";;
+	x86_64,*)
+		sys="linux-x64";;
+	aarch64,*)
+		sys="linux-arm64";;
+	*,*)
+		sys="linux-arm";;
+	x86_32,*)
+		printf "The x86_32 architecture is not supported by Sharpii.\n"
+		exit;;
+esac
+
+download_tool() {
+	if [[ ! -e ${2} ]]; then
+		if ! command -v curl &> /dev/null
+		then
+			printf "Please install curl using your system's package manager.\n"
+			printf "Optionally, you can download ${1} and save it as $(pwd)/${2} .\n"
+			printf "(If you actually do this, expect to get this 2 more times)\n"
+			exit
+		fi
+		printf "* Downloading ${2}...\n"
+		curl -sL ${1} -o ${2}
+	else
+		printf "* ${2} appears to exist; not downloading.\n"
+	fi
+	if [[ ! -x ${2} ]]; then chmod +x ${2}; fi
 }
 
-download
+download_tool "$sharpii/sharpii($sys)" Sharpii
+download_tool "$lzx-$kernel-$arch" lzx
+download_tool "$wiiwarepatcher-$kernel-$arch" wiiwarepatcher
 
 if ! ls *.wad >/dev/null 2>&1
 then
-    printf "There are no wads to patch. Put some in the same directory as the script.\n"; exit
+	printf "There are no wads to patch. Put some in the same directory as the script.\n"
+	if [[ ! -e patcher.sh ]]; then
+		printf "\nNote: The patcher doesn't appear to be here ($(pwd)) either.\n"
+		printf "You must place your wad files in there, or change to the patcher's directory, then try again.\n"
+    fi
+    exit
 fi
 
 
@@ -75,14 +95,12 @@ for f in *.wad; do
     echo "Making backup..."
     cp "$f" "backup-wads"
     echo "Patching... This might take a second."
-    if [[ $arch -ne "i386" ]]; then ./sharpii WAD -u "$f" "temp"; fi
-    if [[ $arch -eq "i386" ]]; then sharpii/sharpii WAD -u "$f" "temp"; fi
-    mv ./temp/00000001.app 00000001.app
-    ./wiiwarepatcher
-    mv 00000001.app ./temp/00000001.app
-    rm "$f"
-    if [[ $arch -ne "i386" ]]; then ./sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"; fi
-    if [[ $arch -eq "i386" ]]; then sharpii/sharpii WAD -p "temp" "./wiimmfi-wads/${f%%.wad}-Wiimmfi"; fi
+    ./Sharpii wad -u "$f" "temp"
+    pushd temp >/dev/null
+    ../wiiwarepatcher
+    popd
+    rm "$f" >/dev/null
+    ./Sharpii wad -p "temp" "./wiimmfi-wads/${f%%.wad} (Wiimmfi)"
     rm -r temp
 done
 
