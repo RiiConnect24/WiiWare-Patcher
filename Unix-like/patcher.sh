@@ -1,31 +1,8 @@
 #!/usr/bin/env bash
 
-
 sharpii="https://noahpistilli.github.io/RC24_Patcher/Sharpii"
 wiiwarepatcher="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/wiiwarepatcher"
 lzx="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/lzx"
-
-#Needed for Sharpii on i386 systems # << What
-#libwiisharp="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/libwiisharp.dll"
-
-#detect architecture to download the correct binary for sharpii, lzx and wiiwarepatcher
-# if [[ -z "$(uname -s | grep 'Darwin')" ]]; then
-#     kernel="$(uname -s)"
-#     if [[ -n "$(uname -m | grep 'arm*\|aarch*')" ]]; then
-#         arch="arm"
-#     elif [[ -n "$(uname -m | grep 'x86_64')" ]]; then
-#         arch="amd64"
-#     elif [[ -n "$(uname -m | grep 'i386')" ]]; then
-#         arch="i386"
-#     else
-#         printf "Unable to use your architecture: $(uname -m)\n$helpmsg\n"; exit
-#     fi
-# else
-#     kernel="$(uname -s)" # darwin
-#     arch="amd64" # will update this when ARM MacBooks come around. (written April 2020)
-#     # macOS uses mach-o binaries, so the same one can be used for both arm, and amd64 (written Feburary 2020)
-#     # I'm too lazy to change the code further down when it makes no difference
-# fi
 
 kernel="$(uname -s)"
 case $(uname -m) in
