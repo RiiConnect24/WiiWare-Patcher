@@ -4,6 +4,7 @@ sharpii="https://noahpistilli.github.io/RC24_Patcher/Sharpii"
 wiiwarepatcher="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/wiiwarepatcher"
 lzx="https://github.com/RiiConnect24/WiiWare-Patcher/raw/master/bin/lzx"
 
+# Detect architecture to download the correct binary for sharpii, lzx and wiiwarepatcher
 kernel="$(uname -s)"
 case $(uname -m) in
 	arm*|aarch*)
